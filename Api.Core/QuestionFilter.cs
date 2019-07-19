@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Api.Contract;
 using System.Collections.Generic;
-using System.Text;
-using Api.Contract;
 
 namespace Api.Core {
     public class QuestionFilter : IQuestionFilter {

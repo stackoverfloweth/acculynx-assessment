@@ -52,10 +52,12 @@
     <Compile Include="IQuestionFetcher.cs" />
     <Compile Include="IQuestionFilter.cs" />
     <Compile Include="IStackExchangeClient.cs" />
+    <Compile Include="IStackExchangeResourceFetcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionFetcher.cs" />
     <Compile Include="QuestionFilter.cs" />
     <Compile Include="StackExchangeClient.cs" />
+    <Compile Include="StackExchangeResourceFetcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

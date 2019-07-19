@@ -1,6 +1,7 @@
 ﻿using Api.Core;
 using System.Collections.Generic;
 using System.Web.Http;
+using Api.Contract;
 
 namespace Api.Controllers {
     public class QuestionController : ApiController {
@@ -11,9 +12,8 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        public IEnumerable<string> Get() {
-            var questions = _questionFetcher.FetchQuestions();
-            return new string[] { "value1", "value2" };
+        public IEnumerable<QuestionDto> FetchQuestions() {
+            return _questionFetcher.FetchQuestions();
         }
     }
 }

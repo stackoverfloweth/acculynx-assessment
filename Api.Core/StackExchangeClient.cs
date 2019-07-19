@@ -1,19 +1,24 @@
 ﻿using Api.Contract;
-using Api.Core;
+using Api.Contract.Enums;
 using RestSharp;
 
-public class StackExchangeClient : IStackExchangeClient {
-    private readonly RestClient _restClient;
+namespace Api.Core {
+    public class StackExchangeClient : IStackExchangeClient {
+        private readonly RestClient _restClient;
+        private readonly IStackExchangeResourceFetcher _stackExchangeResourceFetcher;
 
-    public StackExchangeClient() {
-        _restClient = new RestClient("https://api.stackexchange.com/2.2");
-    }
+        public StackExchangeClient(IStackExchangeResourceFetcher stackExchangeResourceFetcher) {
+            _restClient = new RestClient("https://api.stackexchange.com/2.2");
+            _stackExchangeResourceFetcher = stackExchangeResourceFetcher;
+        }
 
-    public QuestionResponseDto Questions(int page) {
-        //"https://api.stackexchange.com/2.2/questions?fromdate=1563408000&todate=1563494400&order=desc&sort=creation&site=stackoverflow"
-        var client = new RestClient("https://api.stackexchange.com/2.2");
-        var request = new RestRequest($"questions?site=stackoverflow&pagesize=100&page={page}");
+        public QuestionResponseDto Questions(int page)
+        {
+            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.Question);
+            var request = new RestRequest(resource);
+            request.AddParameter("page", page);
 
-        return client.Execute<QuestionResponseDto>(request).Data;
+            return _restClient.Execute<QuestionResponseDto>(request).Data;
+        }
     }
 }
