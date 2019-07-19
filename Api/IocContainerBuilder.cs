@@ -18,42 +18,45 @@ namespace Api {
 
             var assemblies = new[] {
                 typeof(QuestionController).Assembly,                // Api
-                typeof(FilteredLatestQuestionsFetcher).Assembly,                   // Api.Core
+                typeof(FilteredLatestQuestionsFetcher).Assembly,    // Api.Core
                 typeof(QuestionDto).Assembly,                       // Api.Contract
                 typeof(StackOverflowethContext).Assembly,           // Data
             };
             builder.RegisterAssemblyTypes(assemblies).AsImplementedInterfaces().InstancePerRequest();
 
+            RegisterAutoMapper(builder);
+
             var container = builder.Build();
 
-            RegisterAutoMapper(builder, container);
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             return container;
         }
 
-        private static void RegisterAutoMapper(ContainerBuilder builder, IContainer container)
-        {
-            builder
-                .RegisterAssemblyTypes(typeof(QuestionMapping).Assembly)
-                .As<Profile>()
-                .InstancePerRequest();
+        private static void RegisterAutoMapper(ContainerBuilder builder) {
+            //https://kevsoft.net/2016/02/24/automapper-and-autofac-revisited.html
 
-            builder.Register(context => new MapperConfiguration(config =>
-            {
-                config.ConstructServicesUsing(container.Resolve);
-                foreach (var profile in context.Resolve<IEnumerable<Profile>>())
-                {
-                    config.AddProfile(profile);
-                }
-            })).AsSelf().InstancePerRequest();
+            builder.Register(context => {
+                var profiles = context.Resolve<IEnumerable<Profile>>();
 
-            builder.Register(componentContext =>
-            {
-                var context = componentContext.Resolve<IComponentContext>();
-                var config = context.Resolve<MapperConfiguration>();
-                return config.CreateMapper(context.Resolve);
-            }).As<IMapper>().InstancePerRequest();
+                var config = new MapperConfiguration(x => {
+                    foreach (var profile in profiles) {
+                        x.AddProfile(profile);
+                    }
+                });
+
+                return config;
+            })
+                .SingleInstance()
+                .AutoActivate()
+                .AsSelf();
+
+            builder.Register(tempContext => {
+                var ctx = tempContext.Resolve<IComponentContext>();
+                var config = ctx.Resolve<MapperConfiguration>();
+
+                return config.CreateMapper();
+            }).As<IMapper>();
         }
     }
 }

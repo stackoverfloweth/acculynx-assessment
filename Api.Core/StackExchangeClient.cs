@@ -20,9 +20,17 @@ namespace Api.Core {
 
             return _restClient.Execute<QuestionResponseDto>(request).Data;
         }
+
         public QuestionResponseDto GetQuestions(List<int> ids) {
             var request = _stackExchangeRequestBuilder.BuildRequest(StackExchangeResourceEnum.Question);
             request.Resource += $"/{string.Join(";", ids)}";
+
+            return _restClient.Execute<QuestionResponseDto>(request).Data;
+        }
+
+        public QuestionResponseDto GetAnswers(int id) {
+            var request = _stackExchangeRequestBuilder.BuildRequest(StackExchangeResourceEnum.Question);
+            request.Resource += $"/{id}/answers";
 
             return _restClient.Execute<QuestionResponseDto>(request).Data;
         }

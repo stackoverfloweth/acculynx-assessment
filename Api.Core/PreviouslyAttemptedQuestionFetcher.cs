@@ -1,29 +1,28 @@
-﻿using System;
+﻿using Api.Contract;
+using Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Api.Contract;
-using Data.Repositories;
 
 namespace Api.Core {
     public class PreviouslyAttemptedQuestionFetcher : IPreviouslyAttemptedQuestionFetcher {
         private readonly IAttemptRepository _attemptRepository;
         private readonly IStackExchangeClient _stackExchangeClient;
+        private readonly IAttemptedQuestionDtoAssembler _attemptedQuestionDtoAssembler;
 
-        public PreviouslyAttemptedQuestionFetcher(IAttemptRepository attemptRepository, IStackExchangeClient stackExchangeClient)
+        public PreviouslyAttemptedQuestionFetcher(IAttemptRepository attemptRepository, IStackExchangeClient stackExchangeClient, IAttemptedQuestionDtoAssembler attemptedQuestionDtoAssembler)
         {
             _attemptRepository = attemptRepository;
             _stackExchangeClient = stackExchangeClient;
+            _attemptedQuestionDtoAssembler = attemptedQuestionDtoAssembler;
         }
 
-        public IEnumerable<QuestionDto> FetchQuestions(string ip)
+        public IEnumerable<AttemptedQuestionDto> FetchQuestions(string ip)
         {
-            var attempts = _attemptRepository.GetAttempts(ip);
+            var attempts = _attemptRepository.GetAttempts(ip).ToList();
             var attemptQuestionIds = attempts.Select(attempt => attempt.QuestionId).ToList();
             var questionResponseDto = _stackExchangeClient.GetQuestions(attemptQuestionIds);
-
-            return questionResponseDto.Items;
+            
+            return _attemptedQuestionDtoAssembler.AssembleAttemptedQuestions(attempts, questionResponseDto.Items);
         }
     }
 }

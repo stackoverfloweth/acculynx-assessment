@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMapper\QuestionMapping.cs" />
+    <Compile Include="AttemptedQuestionDtoAssembler.cs" />
+    <Compile Include="AutoMapper\AttemptMapping.cs" />
+    <Compile Include="IAttemptedQuestionDtoAssembler.cs" />
     <Compile Include="IFilteredLatestQuestionsFetcher.cs" />
     <Compile Include="IPreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="IQuestionFilter.cs" />

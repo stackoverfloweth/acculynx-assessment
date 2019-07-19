@@ -1,11 +1,10 @@
-﻿using Api.Core;
+﻿using Api.Contract;
+using Api.Core;
 using System.Collections.Generic;
-using System.ServiceModel.Channels;
-using System.Web;
 using System.Web.Http;
-using Api.Contract;
 
 namespace Api.Controllers {
+    [RoutePrefix("question")]
     public class QuestionController : ApiController {
         private readonly IFilteredLatestQuestionsFetcher _filteredLatestQuestionsFetcher;
         private readonly IPreviouslyAttemptedQuestionFetcher _previouslyAttemptedQuestionFetcher;
@@ -16,20 +15,26 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        [Route("Latest")]
+        [Route("latest")]
         public IEnumerable<QuestionDto> FetchLatestQuestions() {
             var latestQuestions = _filteredLatestQuestionsFetcher.FetchQuestions();
 
             return latestQuestions;
         }
 
-        [HttpGet]
-        [Route("Previous")]
-        public IEnumerable<QuestionDto> FetchPreviousQuestions() {
-            var ip = HttpContext.Current.Request.UserHostAddress;
-            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(ip);
+        //[HttpGet]
+        //[Route("previous")]
+        //public IEnumerable<AttemptedQuestionDto> FetchPreviousQuestions() {
+        //    var ip = HttpContext.Current.Request.UserHostAddress;
+        //    var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(ip);
 
-            return previousQuestions;
-        }
+        //    return previousQuestions;
+        //}
+
+        //[HttpGet]
+        //[Route("{id}/answers")]
+        //public IEnumerable<QuestionDto> FetchAnswersForQuestion([FromUri] int questionId) {
+        //    return null;
+        //}
     }
 }
