@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Web;
-using Api.Contract;
+﻿using Api.Contract;
 using Api.Controllers;
 using Api.Core;
 using Api.Core.AutoMapper;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Web.Http;
 
 namespace Api {
     public class IocContainerBuilder {
@@ -27,6 +25,7 @@ namespace Api {
             var container = builder.Build();
 
             RegisterAutoMapper(builder, container);
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
             return container;
         }

@@ -1,6 +1,6 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Mvc;
-using Autofac.Integration.WebApi;
 
 namespace Api {
     public class WebApiApplication : System.Web.HttpApplication {
@@ -8,10 +8,11 @@ namespace Api {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
-            var config = GlobalConfiguration.Configuration;
             var iocContainerBuilder = new IocContainerBuilder();
-            var iosContainer = iocContainerBuilder.BuildContainer();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(iosContainer);
+            iocContainerBuilder.BuildContainer();
+        }
+        protected void Application_Error(object sender, EventArgs e) {
+            var exception = Server.GetLastError();
         }
     }
 }

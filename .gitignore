@@ -21,3 +21,8 @@
 /StackOverfloweth/build
 /Api.Contract/bin/Debug/netstandard2.0
 /Api.Core/bin/Debug/netstandard2.0
+/StackOverfloweth/dist/static
+/StackOverfloweth/dist
+/Api.Contract/bin/Debug
+/Api.Core/bin/Debug
+/Data/bin/Debug

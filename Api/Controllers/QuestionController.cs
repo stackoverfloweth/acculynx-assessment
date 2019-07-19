@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Api.Core;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using Api.Core;
 
 namespace Api.Controllers {
     public class QuestionController : ApiController {

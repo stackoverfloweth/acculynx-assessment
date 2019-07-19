@@ -3,8 +3,7 @@ using Api.Contract;
 
 namespace Api.Core
 {
-    public interface IQuestionFetcher
-    {
+    public interface IQuestionFetcher {
         IEnumerable<QuestionDto> FetchQuestions();
     }
 }

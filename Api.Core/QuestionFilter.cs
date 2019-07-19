@@ -5,8 +5,7 @@ using Api.Contract;
 
 namespace Api.Core {
     public class QuestionFilter : IQuestionFilter {
-        public IEnumerable<QuestionDto> FilterQuestions(IEnumerable<QuestionDto> questions)
-        {
+        public IEnumerable<QuestionDto> FilterQuestions(IEnumerable<QuestionDto> questions) {
             return questions;
         }
     }
