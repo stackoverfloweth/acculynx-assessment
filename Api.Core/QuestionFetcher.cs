@@ -13,6 +13,7 @@ namespace Api.Core {
 
         public IEnumerable<QuestionDto> FetchQuestions() {
             var questions = new List<QuestionDto>();
+            
             return _questionFilter.FilterQuestions(questions);
         }
     }
