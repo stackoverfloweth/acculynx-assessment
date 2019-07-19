@@ -49,13 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\QuestionMapping.cs" />
-    <Compile Include="IQuestionFetcher.cs" />
+    <Compile Include="IFilteredLatestQuestionsFetcher.cs" />
+    <Compile Include="IPreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="IQuestionFilter.cs" />
     <Compile Include="IStackExchangeClient.cs" />
     <Compile Include="IStackExchangeRequestBuilder.cs" />
     <Compile Include="IStackExchangeResourceFetcher.cs" />
+    <Compile Include="PreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuestionFetcher.cs" />
+    <Compile Include="FilteredLatestQuestionsFetcher.cs" />
     <Compile Include="QuestionFilter.cs" />
     <Compile Include="StackExchangeClient.cs" />
     <Compile Include="StackExchangeRequestFetcher.cs" />
@@ -68,6 +70,10 @@
     <ProjectReference Include="..\Api.Contract\Api.Contract.csproj">
       <Project>{F68F68C9-4733-4E87-B0A6-07791ED2EE99}</Project>
       <Name>Api.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{CBBCDCBB-3D83-4F73-A9A0-91632A8BB5C1}</Project>
+      <Name>Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

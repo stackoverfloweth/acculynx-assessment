@@ -4,30 +4,32 @@ using System.ServiceModel.Channels;
 using System.Web;
 using System.Web.Http;
 using Api.Contract;
-using Data.Repositories;
 
-namespace Api.Controllers
-{
-    public class QuestionController : ApiController
-    {
-        private readonly IQuestionFetcher _questionFetcher;
-        private readonly IAttemptRepository _attemptRepository;
+namespace Api.Controllers {
+    public class QuestionController : ApiController {
+        private readonly IFilteredLatestQuestionsFetcher _filteredLatestQuestionsFetcher;
+        private readonly IPreviouslyAttemptedQuestionFetcher _previouslyAttemptedQuestionFetcher;
 
-        public QuestionController(IQuestionFetcher questionFetcher, IAttemptRepository attemptRepository)
-        {
-            _questionFetcher = questionFetcher;
-            _attemptRepository = attemptRepository;
-
-            //var ip = HttpContext.Current.Request.UserHostAddress;
+        public QuestionController(IFilteredLatestQuestionsFetcher filteredLatestQuestionsFetcher, IPreviouslyAttemptedQuestionFetcher previouslyAttemptedQuestionFetcher) {
+            _filteredLatestQuestionsFetcher = filteredLatestQuestionsFetcher;
+            _previouslyAttemptedQuestionFetcher = previouslyAttemptedQuestionFetcher;
         }
 
         [HttpGet]
-        public IEnumerable<QuestionDto> FetchQuestions()
-        {
-            var attempts = _attemptRepository.GetAttempts();
-            var questions = _questionFetcher.FetchQuestions();
+        [Route("Latest")]
+        public IEnumerable<QuestionDto> FetchLatestQuestions() {
+            var latestQuestions = _filteredLatestQuestionsFetcher.FetchQuestions();
 
-            return questions;
+            return latestQuestions;
+        }
+
+        [HttpGet]
+        [Route("Previous")]
+        public IEnumerable<QuestionDto> FetchPreviousQuestions() {
+            var ip = HttpContext.Current.Request.UserHostAddress;
+            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(ip);
+
+            return previousQuestions;
         }
     }
 }

@@ -227,10 +227,6 @@
       <Project>{D75DC2DC-3993-44CB-80DA-77EBB2557703}</Project>
       <Name>Api.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{CBBCDCBB-3D83-4F73-A9A0-91632A8BB5C1}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

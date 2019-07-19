@@ -13,8 +13,14 @@ namespace Data.Repositories {
             _stackOverflowethContext = stackOverflowethContext;
         }
 
-        public IEnumerable<Attempt> GetAttempts() {
-            return _stackOverflowethContext.Attempts.ToList();
+        public IEnumerable<Attempt> GetAttempts(string ip) {
+            if (string.IsNullOrEmpty(ip)) {
+                return new List<Attempt>();
+            }
+
+            return _stackOverflowethContext.Attempts
+                .Where(attempt => attempt.UserIpAddress == ip)
+                .ToList();
         }
     }
 }

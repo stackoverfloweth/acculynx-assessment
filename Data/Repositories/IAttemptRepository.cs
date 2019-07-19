@@ -5,6 +5,6 @@ namespace Data.Repositories
 {
     public interface IAttemptRepository
     {
-        IEnumerable<Attempt> GetAttempts();
+        IEnumerable<Attempt> GetAttempts(string ip);
     }
 }

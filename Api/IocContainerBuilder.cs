@@ -18,7 +18,7 @@ namespace Api {
 
             var assemblies = new[] {
                 typeof(QuestionController).Assembly,                // Api
-                typeof(QuestionFetcher).Assembly,                   // Api.Core
+                typeof(FilteredLatestQuestionsFetcher).Assembly,                   // Api.Core
                 typeof(QuestionDto).Assembly,                       // Api.Contract
                 typeof(StackOverflowethContext).Assembly,           // Data
             };
