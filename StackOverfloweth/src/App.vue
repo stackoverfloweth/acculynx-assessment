@@ -1,19 +1,23 @@
 <template>
-    <div id="app">
-        <Home msg="Hello world!" />
-    </div>
+  <div id="app">
+    <header>
+      <b-navbar toggleable="md" type="light" variant="light">
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-brand to="/">StackOverfloweth</b-navbar-brand>
+      </b-navbar>
+    </header>
+    <main>
+      <router-view></router-view>
+    </main>
+  </div>
 </template>
 
 <script>
-    import Home from './components/Home.vue';
-
-    export default {
-        name: 'app',
-        components: {
-            Home
-        }
-    };
+  export default {
+    name: 'app'
+  }
 </script>
 
 <style>
+
 </style>

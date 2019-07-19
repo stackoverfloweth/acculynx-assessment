@@ -9,9 +9,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>e1073b1a-badc-4694-86a5-e5e91ada839a</ProjectGuid>
+    <ProjectGuid>c32d7274-0713-4895-b8b5-2d20b0922339</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>node_modules\@vue\cli-service\bin\vue-cli-service.js</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -20,7 +21,6 @@
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>true</StartWebBrowser>
-    <ScriptArguments>serve</ScriptArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,29 +29,27 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="public\favicon.ico" />
-    <Content Include="public\index.html" />
-    <Content Include="src\App.vue" />
-    <Content Include="src\components\Home.vue" />
+    <Content Include=".babelrc" />
+    <Content Include="config\dev.env.js" />
+    <Content Include="config\index.js" />
+    <Content Include="config\prod.env.js" />
+    <Content Include="index.html" />
     <Content Include="package.json" />
-    <Content Include="README.md" />
+    <Content Include="src\App.vue" />
+    <Content Include="src\components\Hello.vue" />
+    <Content Include="src\main.js" />
+    <Content Include="src\router\index.js" />
+    <Content Include="src\WebApiCommunications.js">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="dist\" />
-    <Folder Include="public\" />
+    <Folder Include="config\" />
     <Folder Include="src\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\components\" />
+    <Folder Include="src\router\" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="babel.config.js" />
-    <Content Include="src\main.js" />
-  </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-      npm run build
-    </PostBuildEvent>
-  </PropertyGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
     <VisualStudio>
