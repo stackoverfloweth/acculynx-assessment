@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "StackOverfloweth", "StackOverfloweth\StackOverfloweth.njsproj", "{E1073B1A-BADC-4694-86A5-E5E91ADA839A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{FCCD2FE9-8685-4AB7-A570-B920138E47D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1073B1A-BADC-4694-86A5-E5E91ADA839A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1073B1A-BADC-4694-86A5-E5E91ADA839A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1073B1A-BADC-4694-86A5-E5E91ADA839A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1073B1A-BADC-4694-86A5-E5E91ADA839A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCCD2FE9-8685-4AB7-A570-B920138E47D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCD2FE9-8685-4AB7-A570-B920138E47D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCCD2FE9-8685-4AB7-A570-B920138E47D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCCD2FE9-8685-4AB7-A570-B920138E47D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2E1D46F8-0370-4342-A4FD-23ABD0BED0F9}
+	EndGlobalSection
+EndGlobal

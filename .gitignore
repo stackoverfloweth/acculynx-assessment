@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/StackOverfloweth/v16
+/StackOverfloweth/node_modules
+/StackOverfloweth/node_modules
+/StackOverfloweth/obj/Debug
+/StackOverfloweth/package-lock.json
+/StackOverfloweth/bin
+/WebApi/bin/Debug/netcoreapp2.1
+/WebApi/obj
