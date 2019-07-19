@@ -19,3 +19,5 @@
 /Data/obj
 /packages
 /StackOverfloweth/build
+/Api.Contract/bin/Debug/netstandard2.0
+/Api.Core/bin/Debug/netstandard2.0

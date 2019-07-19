@@ -13,5 +13,11 @@ namespace Api.Controllers {
         public QuestionController(IQuestionFetcher questionFetcher) {
             _questionFetcher = questionFetcher;
         }
+
+        [HttpGet]
+        public IEnumerable<string> Get() {
+            var questions = _questionFetcher.FetchQuestions();
+            return new string[] { "value1", "value2" };
+        }
     }
 }

@@ -17,6 +17,6 @@ export default {
     });
   },
   getAll() {
-    return this.execute('get', 'values');
+    return this.execute('get', 'question');
   }
 };
