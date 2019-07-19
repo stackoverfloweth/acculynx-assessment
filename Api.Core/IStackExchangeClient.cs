@@ -1,7 +1,9 @@
-﻿using Api.Contract;
+﻿using System.Collections.Generic;
+using Api.Contract;
 
 namespace Api.Core {
     public interface IStackExchangeClient {
-        QuestionResponseDto Questions(int page);
+        QuestionResponseDto GetLatestQuestions(int page);
+        QuestionResponseDto GetQuestions(List<int> ids);
     }
 }

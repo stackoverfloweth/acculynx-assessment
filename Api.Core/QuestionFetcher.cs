@@ -14,7 +14,8 @@ namespace Api.Core {
         }
 
         public IEnumerable<QuestionDto> FetchQuestions() {
-            var questionResponse = _stackExchangeClient.Questions(1);
+            //var questionResponse = _stackExchangeClient.GetLatestQuestions(1);
+            var questionResponse = _stackExchangeClient.GetQuestions(new List<int> {12345, 2348, 2349});
 
             return _questionFilter.FilterQuestions(questionResponse.Items);
         }

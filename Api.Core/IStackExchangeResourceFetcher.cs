@@ -1,4 +1,5 @@
 ﻿using Api.Contract.Enums;
+using RestSharp;
 
 namespace Api.Core
 {
