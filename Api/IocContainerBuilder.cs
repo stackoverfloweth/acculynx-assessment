@@ -5,6 +5,7 @@ using Api.Core.AutoMapper;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
+using Data;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Http;
@@ -16,12 +17,13 @@ namespace Api {
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             var assemblies = new[] {
-                typeof(QuestionController).Assembly,    // Api
-                typeof(QuestionFetcher).Assembly,       // Api.Core
-                typeof(QuestionDto).Assembly,           // Api.Contract
+                typeof(QuestionController).Assembly,                // Api
+                typeof(QuestionFetcher).Assembly,                   // Api.Core
+                typeof(QuestionDto).Assembly,                       // Api.Contract
+                typeof(StackOverflowethContext).Assembly,           // Data
             };
             builder.RegisterAssemblyTypes(assemblies).AsImplementedInterfaces().InstancePerRequest();
-            
+
             var container = builder.Build();
 
             RegisterAutoMapper(builder, container);

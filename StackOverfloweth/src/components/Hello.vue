@@ -13,9 +13,9 @@
         title: 'Testing'
       }
     },
-    async created() {
-      this.getAll()
-    },
+    //async created() {
+    //  this.getAll()
+    //},
     methods: {
       async getAll() {
         this.loading = true
