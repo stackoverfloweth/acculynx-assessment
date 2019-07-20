@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Api.Contract;
 using System.Collections.Generic;
-using System.Text;
-using Api.Contract;
+using System.Linq;
 
 namespace Api.Core {
     public class FilteredLatestQuestionsFetcher : IFilteredLatestQuestionsFetcher {
         private readonly IStackExchangeClient _stackExchangeClient;
         private readonly IQuestionFilter _questionFilter;
+        private static readonly int Expected = 20;
 
         public FilteredLatestQuestionsFetcher(IStackExchangeClient stackExchangeClient, IQuestionFilter questionFilter) {
             _stackExchangeClient = stackExchangeClient;
@@ -14,9 +14,20 @@ namespace Api.Core {
         }
 
         public IEnumerable<QuestionDto> FetchQuestions() {
-            var questionResponseDto = _stackExchangeClient.GetLatestQuestions(1);
+            return FetchQuestionsRecursively(new List<QuestionDto>(), 1);
+        }
 
-            return _questionFilter.FilterQuestions(questionResponseDto.Items);
+        private List<QuestionDto> FetchQuestionsRecursively(List<QuestionDto> questionDtos, int page) {
+            var questionResponseDto = _stackExchangeClient.GetLatestQuestions(page);
+            var filteredQuestionDtos = _questionFilter.FilterQuestions(questionResponseDto.Items);
+
+            questionDtos.AddRange(filteredQuestionDtos);
+
+            if (questionDtos.Count >= Expected) {
+                return questionDtos.Take(Expected).ToList();
+            }
+
+            return FetchQuestionsRecursively(questionDtos, page + 1);
         }
     }
 }

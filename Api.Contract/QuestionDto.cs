@@ -6,8 +6,8 @@ namespace Api.Contract {
     public class QuestionDto {
         [JsonProperty("question_id")]
         public int QuestionId { get; set; }
-        [JsonProperty("is_answered")]
-        public bool IsAnswered { get; set; }
+        [JsonProperty("accepted_answer_id")]
+        public int? AcceptedAnswerId { get; set; }
         [JsonProperty("view_count")]
         public int ViewCount { get; set; }
         [JsonProperty("answer_count")]

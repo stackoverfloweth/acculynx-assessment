@@ -9,6 +9,6 @@ namespace Data.Entities {
         public int QuestionId { get; set; }
         public DateTime AttemptDate { get; set; }
         public int AnswerId { get; set; }
-        public int AttemptAnswerId { get; set; }
+        public int AcceptedAnswerId { get; set; }
     }
 }

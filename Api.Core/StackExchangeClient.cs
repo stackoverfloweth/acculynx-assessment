@@ -19,11 +19,12 @@ namespace Api.Core {
         }
 
         public ItemResponseDto<QuestionDto> GetLatestQuestions(int page) {
-            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.GetQuestions, page);
+            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.GetQuestions);
             var request = new RestRequest(resource);
-            request.AddParameter("page", page);
             request.AddParameter("filter", _filterId);
             request.AddParameter("site", _site);
+            request.AddParameter("pagesize", 100);
+            request.AddParameter("page", page);
 
             return _restClient.Execute<ItemResponseDto<QuestionDto>>(request)?.Data;
         }
@@ -49,7 +50,7 @@ namespace Api.Core {
         private string GetFieldFilterId() {
             var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.CreateFilter);
             var request = new RestRequest(resource);
-            request.AddParameter("include", "question.body;answer.body");
+            request.AddParameter("include", "question.accepted_answer_id;question.body;answer.body");
 
             var response = _restClient.Execute<ItemResponseDto<FilterDto>>(request);
 
