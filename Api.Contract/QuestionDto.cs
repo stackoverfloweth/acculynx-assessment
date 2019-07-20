@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Api.Contract {
     public class QuestionDto {
@@ -20,5 +19,8 @@ namespace Api.Contract {
         public DateTime LastActivityDate { get; set; }
         [JsonProperty("creation_date")]
         public DateTime CreationDate { get; set; }
+        public string Body { get; set; }
+        public IEnumerable<string> Tags { get; set; }
+        public OwnerDto Owner { get; set; }
     }
 }

@@ -6,33 +6,54 @@ using RestSharp;
 
 namespace Api.Core {
     public class StackExchangeClient : IStackExchangeClient {
-        private readonly RestClient _restClient;
-        private readonly IStackExchangeRequestBuilder _stackExchangeRequestBuilder;
+        private readonly IStackExchangeResourceFetcher _stackExchangeResourceFetcher;
+        private readonly IRestClient _restClient;
+        private readonly string _filterId;
+        private readonly string _site;
 
-        public StackExchangeClient(IStackExchangeRequestBuilder stackExchangeRequestBuilder) {
-            _stackExchangeRequestBuilder = stackExchangeRequestBuilder;
+        public StackExchangeClient(IStackExchangeResourceFetcher stackExchangeResourceFetcher) {
+            _stackExchangeResourceFetcher = stackExchangeResourceFetcher;
             _restClient = new RestClient("https://api.stackexchange.com/2.2");
+            _filterId = GetFieldFilterId();
+            _site = "stackoverflow";
         }
 
-        public QuestionResponseDto GetLatestQuestions(int page) {
-            var request = _stackExchangeRequestBuilder.BuildRequest(StackExchangeResourceEnum.Question);
+        public ItemResponseDto<QuestionDto> GetLatestQuestions(int page) {
+            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.GetQuestions, page);
+            var request = new RestRequest(resource);
             request.AddParameter("page", page);
+            request.AddParameter("filter", _filterId);
+            request.AddParameter("site", _site);
 
-            return _restClient.Execute<QuestionResponseDto>(request).Data;
+            return _restClient.Execute<ItemResponseDto<QuestionDto>>(request)?.Data;
         }
 
-        public QuestionResponseDto GetQuestions(List<int> ids) {
-            var request = _stackExchangeRequestBuilder.BuildRequest(StackExchangeResourceEnum.Question);
-            request.Resource += $"/{string.Join(";", ids)}";
+        public ItemResponseDto<QuestionDto> GetQuestions(List<int> ids) {
+            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.LookupQuestions, string.Join(";", ids));
+            var request = new RestRequest(resource);
+            request.AddParameter("filter", _filterId);
+            request.AddParameter("site", _site);
 
-            return _restClient.Execute<QuestionResponseDto>(request).Data;
+            return _restClient.Execute<ItemResponseDto<QuestionDto>>(request)?.Data;
         }
 
-        public QuestionResponseDto GetAnswers(int id) {
-            var request = _stackExchangeRequestBuilder.BuildRequest(StackExchangeResourceEnum.Question);
-            request.Resource += $"/{id}/answers";
+        public ItemResponseDto<AnswerDto> GetAnswers(int id) {
+            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.GetQuestionAnswers, id);
+            var request = new RestRequest(resource);
+            request.AddParameter("filter", _filterId);
+            request.AddParameter("site", _site);
 
-            return _restClient.Execute<QuestionResponseDto>(request).Data;
+            return _restClient.Execute<ItemResponseDto<AnswerDto>>(request).Data;
+        }
+
+        private string GetFieldFilterId() {
+            var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.CreateFilter);
+            var request = new RestRequest(resource);
+            request.AddParameter("include", "question.body;answer.body");
+
+            var response = _restClient.Execute<ItemResponseDto<FilterDto>>(request);
+
+            return response?.Data?.Items?.FirstOrDefault()?.Filter;
         }
     }
 }

@@ -34,29 +34,24 @@ namespace Api {
         }
 
         private static void RegisterAutoMapper(ContainerBuilder builder) {
-            //https://kevsoft.net/2016/02/24/automapper-and-autofac-revisited.html
+            // https://github.com/AutoMapper/AutoMapper/issues/1109#issuecomment-189875202
+            builder
+                .RegisterAssemblyTypes(typeof(AttemptMapping).Assembly)
+                .As<Profile>()
+                .InstancePerRequest();
 
-            builder.Register(context => {
-                var profiles = context.Resolve<IEnumerable<Profile>>();
+            builder.Register(context => new MapperConfiguration(cfg => {
+                cfg.ConstructServicesUsing(context.Resolve);
+                foreach (var profile in context.Resolve<IEnumerable<Profile>>()) {
+                    cfg.AddProfile(profile);
+                }
+            })).AsSelf().InstancePerRequest();
 
-                var config = new MapperConfiguration(x => {
-                    foreach (var profile in profiles) {
-                        x.AddProfile(profile);
-                    }
-                });
-
-                return config;
-            })
-                .SingleInstance()
-                .AutoActivate()
-                .AsSelf();
-
-            builder.Register(tempContext => {
-                var ctx = tempContext.Resolve<IComponentContext>();
-                var config = ctx.Resolve<MapperConfiguration>();
-
-                return config.CreateMapper();
-            }).As<IMapper>();
+            builder.Register(c => {
+                var context = c.Resolve<IComponentContext>();
+                var config = context.Resolve<MapperConfiguration>();
+                return config.CreateMapper(context.Resolve);
+            }).As<IMapper>().InstancePerRequest();
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Api.Core
 {
     public interface IPreviouslyAttemptedQuestionFetcher
     {
-        IEnumerable<AttemptedQuestionDto> FetchQuestions(string ip);
+        IEnumerable<AttemptedQuestionDto> FetchQuestions(string userIpAddress);
     }
 }

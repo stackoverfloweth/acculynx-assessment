@@ -45,12 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnswerDto.cs" />
+    <Compile Include="ItemResponseDto.cs" />
     <Compile Include="AttemptDto.cs" />
     <Compile Include="AttemptedQuestionDto.cs" />
     <Compile Include="Enums\StackExchangeResourceEnum.cs" />
+    <Compile Include="FilterDto.cs" />
+    <Compile Include="OwnerDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionDto.cs" />
-    <Compile Include="QuestionResponseDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using Api.Contract.Enums;
-using RestSharp;
+﻿using Api.Contract.Enums;
+using System;
 
 namespace Api.Core {
     public class StackExchangeResourceFetcher : IStackExchangeResourceFetcher {
-        public string FetchResource(StackExchangeResourceEnum stackExchangeResourceEnum)
+        public string FetchResource(StackExchangeResourceEnum stackExchangeResourceEnum, object argument)
         {
             switch (stackExchangeResourceEnum)
             {
-                case StackExchangeResourceEnum.Question:
-                    return "questions";
+                case StackExchangeResourceEnum.GetQuestions:
+                    return $"questions";
+                case StackExchangeResourceEnum.LookupQuestions:
+                    return $"questions/{argument}";
+                case StackExchangeResourceEnum.GetQuestionAnswers:
+                    return $"questions/{argument}/answers";
+                case StackExchangeResourceEnum.CreateFilter:
+                    return "filters/create";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(stackExchangeResourceEnum), stackExchangeResourceEnum, null);
             }
+        }
+
+        public string FetchResource(StackExchangeResourceEnum stackExchangeResourceEnum) {
+            return FetchResource(stackExchangeResourceEnum, null);
         }
     }
 }

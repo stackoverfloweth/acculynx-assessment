@@ -3,7 +3,8 @@ using Api.Contract;
 
 namespace Api.Core {
     public interface IStackExchangeClient {
-        QuestionResponseDto GetLatestQuestions(int page);
-        QuestionResponseDto GetQuestions(List<int> ids);
+        ItemResponseDto<QuestionDto> GetLatestQuestions(int page);
+        ItemResponseDto<QuestionDto> GetQuestions(List<int> ids);
+        ItemResponseDto<AnswerDto> GetAnswers(int id);
     }
 }
