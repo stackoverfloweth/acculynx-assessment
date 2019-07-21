@@ -6,8 +6,7 @@
     <div v-if="!loading" class="container">
       <div class="row">
         <div class="col">
-          <question-item v-for="(item, index) in questions" v-bind:key="item.question_id" :question="item">
-          </question-item>
+          <attempt-item v-for="(item, index) in attempts" v-bind:key="item.question.question_id" :attempt="item"></attempt-item>
         </div>
       </div>
     </div>
@@ -16,27 +15,27 @@
 
 <script>
   import Api from '@/api';
-  import QuestionItem from '@/components/QuestionItem';
+  import AttemptItem from '@/components/AttemptItem';
 
   export default {
     data() {
       return {
         loading: true,
-        questions: []
+        attempts: []
       }
     },
     components: {
-      QuestionItem
+      AttemptItem
     },
     mounted() {
-      this.loadQuestions()
+      this.loadAttempts()
     },
     methods: {
-      async loadQuestions() {
+      async loadAttempts() {
         this.loading = true
 
         try {
-          this.questions = await Api.getLatest()
+          this.attempts = await Api.getPrevious()
         } finally {
           this.loading = false
         }
@@ -45,5 +44,5 @@
   }
 </script>
 
-<style scope>
+<style>
 </style>

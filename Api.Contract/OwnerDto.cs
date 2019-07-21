@@ -16,6 +16,7 @@ namespace Api.Contract {
         public string ProfileImage { get; set; }
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
+        [JsonProperty("link")]
         public string Link { get; set; }
     }
 }

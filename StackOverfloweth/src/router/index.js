@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Primary from '@/components/Primary';
+import Review from '@/components/Review';
+import Question from '@/components/Question';
 
 Vue.use(Router);
 
@@ -8,13 +10,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Primary',
+      name: 'primary',
       component: Primary
     },
     {
-      path: '/Review',
-      name: 'Review',
-      component: Primary
+      path: '/review',
+      name: 'review',
+      component: Review
+    },
+    {
+      path: '/question/:questionId',
+      name: 'question',
+      component: Question
     }
   ]
 });

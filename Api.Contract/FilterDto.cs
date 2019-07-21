@@ -7,6 +7,7 @@ namespace Api.Contract {
         public string FilterType { get; set; }
         [JsonProperty("included_fields")]
         public IEnumerable<string> IncludedFields { get; set; }
+        [JsonProperty("filter")]
         public string Filter { get; set; }
     }
 }
