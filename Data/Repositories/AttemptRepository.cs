@@ -12,13 +12,13 @@ namespace Data.Repositories {
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Attempt> GetAttempts(string ip) {
-            if (string.IsNullOrEmpty(ip)) {
+        public IEnumerable<Attempt> GetAttempts(string userId) {
+            if (string.IsNullOrEmpty(userId)) {
                 return new List<Attempt>();
             }
 
             return _dbContext.Attempts
-                .Where(attempt => attempt.UserId == ip)
+                .Where(attempt => attempt.UserId == userId)
                 .ToList();
         }
 
