@@ -30,5 +30,11 @@ namespace Data.Repositories {
             _dbContext.Attempts.Add(attempt);
             _dbContext.SaveChanges();
         }
+
+        public IEnumerable<Attempt> GetAttemptsForQuestion(int questionId) {
+            return _dbContext.Attempts
+                .Where(attempt=> attempt.QuestionId == questionId)
+                .ToList();
+        }
     }
 }

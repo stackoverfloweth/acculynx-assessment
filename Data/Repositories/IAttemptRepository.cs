@@ -7,5 +7,6 @@ namespace Data.Repositories
     {
         IEnumerable<Attempt> GetAttempts(string ip);
         void InsertAttempt(Attempt attempt);
+        IEnumerable<Attempt> GetAttemptsForQuestion(int attempt);
     }
 }
