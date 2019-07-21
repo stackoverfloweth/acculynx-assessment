@@ -10,5 +10,6 @@ namespace Data.Entities {
         public DateTime AttemptDate { get; set; }
         public int AnswerId { get; set; }
         public int AcceptedAnswerId { get; set; }
+        public int Score { get; set; }
     }
 }

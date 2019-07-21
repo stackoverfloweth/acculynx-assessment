@@ -1,12 +1,14 @@
-﻿using Api.Contract;
+﻿using System;
+using Api.Contract;
 using AutoMapper;
 using Data.Entities;
 
 namespace Api.Core.AutoMapper {
     public class AttemptMapping : Profile {
         public AttemptMapping() {
-            CreateMap<Attempt, AttemptDto>()
-                .ForMember(p => p.AnsweredCorrectly, opt => opt.MapFrom(src => src.AnswerId == src.AcceptedAnswerId));
+            CreateMap<Attempt, AttemptDto>();
+            CreateMap<AttemptDto, Attempt>()
+                .ForMember(p => p.AttemptDate, opt=> opt.MapFrom(src => DateTime.Now));
         }
     }
 }

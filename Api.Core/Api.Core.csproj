@@ -49,8 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttemptedQuestionDtoAssembler.cs" />
+    <Compile Include="AttemptScoreCalculator.cs" />
+    <Compile Include="AttemptSubmissionManager.cs" />
     <Compile Include="AutoMapper\AttemptMapping.cs" />
     <Compile Include="IAttemptedQuestionDtoAssembler.cs" />
+    <Compile Include="IAttemptScoreCalculator.cs" />
+    <Compile Include="IAttemptSubmissionManager.cs" />
     <Compile Include="IFilteredLatestQuestionsFetcher.cs" />
     <Compile Include="IPreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="IQuestionFilter.cs" />

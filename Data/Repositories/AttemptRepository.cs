@@ -7,10 +7,9 @@ using Data.Entities;
 
 namespace Data.Repositories {
     public class AttemptRepository : IAttemptRepository {
-        private readonly IStackOverflowethContext _stackOverflowethContext;
-
-        public AttemptRepository(IStackOverflowethContext stackOverflowethContext) {
-            _stackOverflowethContext = stackOverflowethContext;
+        private readonly IStackOverflowethContext _dbContext;
+        public AttemptRepository(IStackOverflowethContext dbContext) {
+            _dbContext = dbContext;
         }
 
         public IEnumerable<Attempt> GetAttempts(string ip) {
@@ -18,9 +17,18 @@ namespace Data.Repositories {
                 return new List<Attempt>();
             }
 
-            return _stackOverflowethContext.Attempts
+            return _dbContext.Attempts
                 .Where(attempt => attempt.UserIpAddress == ip)
                 .ToList();
+        }
+
+        public void InsertAttempt(Attempt attempt) {
+            if (attempt == null) {
+                return;
+            }
+
+            _dbContext.Attempts.Add(attempt);
+            _dbContext.SaveChanges();
         }
     }
 }
