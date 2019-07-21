@@ -5,7 +5,7 @@ using System.Web.Http;
 
 namespace Api.Controllers {
     [RoutePrefix("attempt")]
-    public class AttemptController :  ApiController {
+    public class AttemptController :  BaseApiController {
         private readonly IAttemptSubmissionManager _attemptSubmissionManager;
 
         public AttemptController(IAttemptSubmissionManager attemptSubmissionManager) {
@@ -15,8 +15,7 @@ namespace Api.Controllers {
         [HttpPost]
         [Route("")]
         public AttemptDto CreateAttempt(AttemptDto attemptDto) {
-            var userIpAddress = HttpContext.Current.Request.UserHostAddress;
-            return _attemptSubmissionManager.SubmitAttempt(attemptDto, userIpAddress);
+            return _attemptSubmissionManager.SubmitAttempt(attemptDto, UserId);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace Api.Controllers {
     [RoutePrefix("question")]
-    public class QuestionController : ApiController {
+    public class QuestionController : BaseApiController {
         private readonly IFilteredLatestQuestionsFetcher _filteredLatestQuestionsFetcher;
         private readonly IPreviouslyAttemptedQuestionFetcher _previouslyAttemptedQuestionFetcher;
         private readonly IStackExchangeClient _stackExchangeClient;
@@ -28,8 +28,7 @@ namespace Api.Controllers {
         [HttpGet]
         [Route("previous")]
         public IEnumerable<AttemptedQuestionDto> FetchPreviousQuestions() {
-            var userIpAddress = HttpContext.Current.Request.UserHostAddress;
-            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(userIpAddress);
+            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(UserId);
 
             return previousQuestions;
         }

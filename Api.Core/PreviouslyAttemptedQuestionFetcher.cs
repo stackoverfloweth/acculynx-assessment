@@ -16,9 +16,9 @@ namespace Api.Core {
             _attemptedQuestionDtoAssembler = attemptedQuestionDtoAssembler;
         }
 
-        public IEnumerable<AttemptedQuestionDto> FetchQuestions(string userIpAddress)
+        public IEnumerable<AttemptedQuestionDto> FetchQuestions(string userId)
         {
-            var attempts = _attemptRepository.GetAttempts(userIpAddress).ToList();
+            var attempts = _attemptRepository.GetAttempts(userId).ToList();
             var attemptQuestionIds = attempts.Select(attempt => attempt.QuestionId).ToList();
             var questionResponseDto = _stackExchangeClient.GetQuestions(attemptQuestionIds);
             

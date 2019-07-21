@@ -18,7 +18,7 @@ namespace Data.Repositories {
             }
 
             return _dbContext.Attempts
-                .Where(attempt => attempt.UserIpAddress == ip)
+                .Where(attempt => attempt.UserId == ip)
                 .ToList();
         }
 
