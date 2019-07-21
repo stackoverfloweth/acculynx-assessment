@@ -1,6 +1,8 @@
-﻿using System.Web;
-using Api.Contract;
+﻿using Api.Contract;
 using Api.Core;
+using AutoMapper;
+using Data.Repositories;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace Api.Controllers {

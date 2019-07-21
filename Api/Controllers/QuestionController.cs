@@ -1,8 +1,9 @@
 ﻿using Api.Contract;
 using Api.Core;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.Http;
+using AutoMapper;
+using Data.Repositories;
 
 namespace Api.Controllers {
     [RoutePrefix("question")]
@@ -10,11 +11,15 @@ namespace Api.Controllers {
         private readonly IFilteredLatestQuestionsFetcher _filteredLatestQuestionsFetcher;
         private readonly IPreviouslyAttemptedQuestionFetcher _previouslyAttemptedQuestionFetcher;
         private readonly IStackExchangeClient _stackExchangeClient;
+        private readonly IAttemptRepository _attemptRepository;
+        private readonly IMapper _mapper;
 
-        public QuestionController(IFilteredLatestQuestionsFetcher filteredLatestQuestionsFetcher, IPreviouslyAttemptedQuestionFetcher previouslyAttemptedQuestionFetcher, IStackExchangeClient stackExchangeClient) {
+        public QuestionController(IFilteredLatestQuestionsFetcher filteredLatestQuestionsFetcher, IPreviouslyAttemptedQuestionFetcher previouslyAttemptedQuestionFetcher, IStackExchangeClient stackExchangeClient, IAttemptRepository attemptRepository, IMapper mapper) {
             _filteredLatestQuestionsFetcher = filteredLatestQuestionsFetcher;
             _previouslyAttemptedQuestionFetcher = previouslyAttemptedQuestionFetcher;
             _stackExchangeClient = stackExchangeClient;
+            _attemptRepository = attemptRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -34,9 +39,17 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        [Route("{id}/answers")]
-        public IEnumerable<AnswerDto> FetchAnswersForQuestion(int id) {
-            return _stackExchangeClient.GetAnswers(id).Items;
+        [Route("{questionId}/answers")]
+        public IEnumerable<AnswerDto> FetchAnswersForQuestion(int questionId) {
+            return _stackExchangeClient.GetAnswers(questionId).Items;
+        }
+
+        [HttpGet]
+        [Route("{questionId}/attempts")]
+        public IEnumerable<AttemptDto> GetAttemptsForQuestion(int questionId) {
+            var attemptsForQuestion = _attemptRepository.GetAttemptsForQuestion(questionId);
+
+            return _mapper.Map<IEnumerable<AttemptDto>>(attemptsForQuestion);
         }
     }
 }
