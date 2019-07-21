@@ -1,9 +1,9 @@
 ﻿using Api.Contract;
 using Api.Core;
-using System.Collections.Generic;
-using System.Web.Http;
 using AutoMapper;
 using Data.Repositories;
+using System.Collections.Generic;
+using System.Web.Http;
 
 namespace Api.Controllers {
     [RoutePrefix("question")]
@@ -23,7 +23,7 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        [Route("latest/{page?}")]
+        [Route("latest")]
         public IEnumerable<QuestionDto> FetchLatestQuestions() {
             var latestQuestions = _filteredLatestQuestionsFetcher.FetchQuestions();
 
