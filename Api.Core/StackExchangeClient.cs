@@ -29,6 +29,13 @@ namespace Api.Core {
             return _restClient.Execute<ItemResponseDto<QuestionDto>>(request)?.Data;
         }
 
+        public QuestionDto GetQuestion(int questionId) {
+            var response = GetQuestions(new List<int> { questionId });
+            var questionList = response?.Items?.ToList();
+
+            return questionList?[0];
+        }
+
         public ItemResponseDto<QuestionDto> GetQuestions(List<int> ids) {
             var resource = _stackExchangeResourceFetcher.FetchResource(StackExchangeResourceEnum.LookupQuestions, string.Join(";", ids));
             var request = new RestRequest(resource);

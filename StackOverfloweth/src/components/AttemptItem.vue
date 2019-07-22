@@ -1,12 +1,16 @@
 <template>
-  <b-card v-bind:title="attempt.question.title" class="mb-2">
-    <div v-html="attempt.question.body"></div>
-    <div v-for="tag in attempt.question.tags" class="tag m-1">{{tag}}</div>
-  </b-card>
+  <div>
+    <question-item :question="attempt.question"></question-item>
+  </div>
 </template>
 
 <script>
+  import QuestionItem from '@/components/QuestionItem';
+
   export default {
+    components: {
+      QuestionItem
+    },
     props: {
       attempt: {
         type: Object,

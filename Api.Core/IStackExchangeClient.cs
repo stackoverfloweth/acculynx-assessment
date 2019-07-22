@@ -6,5 +6,6 @@ namespace Api.Core {
         ItemResponseDto<QuestionDto> GetLatestQuestions(int page);
         ItemResponseDto<QuestionDto> GetQuestions(List<int> ids);
         ItemResponseDto<AnswerDto> GetAnswers(int id);
+        QuestionDto GetQuestion(int questionId);
     }
 }

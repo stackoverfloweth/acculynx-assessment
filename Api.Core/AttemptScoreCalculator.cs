@@ -20,6 +20,10 @@ namespace Api.Core {
             }
 
             var attemptsOnQuestion = _attemptRepository.GetAttemptsForQuestion(attempt.QuestionId);
+            if (!attemptsOnQuestion.Any()) {
+                return 0;
+            }
+
             var attemptCountWithSameAnswer = attemptsOnQuestion.Count(similar => similar.AnswerId == attempt.AnswerId);
             var score = (double) attemptCountWithSameAnswer / attemptsOnQuestion.Count() * 100;
 

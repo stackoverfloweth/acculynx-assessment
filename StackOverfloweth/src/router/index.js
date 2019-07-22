@@ -19,7 +19,7 @@ export default new Router({
       component: Review
     },
     {
-      path: '/question/:questionId',
+      path: '/question/:question_id',
       name: 'question',
       component: Question
     }

@@ -38,6 +38,10 @@
     cursor: pointer;
   }
 
+  .card:hover {
+    border-color: darkgrey;
+  }
+
   pre {
     margin-bottom: 1em;
     padding: 12px 8px;

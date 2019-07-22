@@ -4,10 +4,12 @@
       <img src="../assets/loading.gif" />
     </div>
     <div v-if="!loading" class="container">
+      <div v-if="questions.length === 0" class="text-center text-muted">
+        That's not good.. I didn't find any questions
+      </div>
       <div class="row">
         <div class="col">
-          <question-item v-for="(item, index) in questions" v-bind:key="item.question_id" :question="item">
-          </question-item>
+          <question-item v-for="(item, index) in questions" v-bind:key="item.question_id" :question="item"></question-item>
         </div>
       </div>
     </div>

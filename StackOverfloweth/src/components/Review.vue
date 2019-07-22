@@ -4,6 +4,9 @@
       <img src="../assets/loading.gif" />
     </div>
     <div v-if="!loading" class="container">
+      <div v-if="attempts.length === 0" class="text-center text-muted">
+        Hmm... I don't have any record of attempts made from this user
+      </div>
       <div class="row">
         <div class="col">
           <attempt-item v-for="(item, index) in attempts" v-bind:key="item.question.question_id" :attempt="item"></attempt-item>

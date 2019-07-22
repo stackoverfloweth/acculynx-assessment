@@ -4,8 +4,10 @@ using AutoMapper;
 using Data.Repositories;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Api.Controllers {
+    [EnableCors(origins: "http://localhost:8080", headers: "*", methods: "*")]
     [RoutePrefix("question")]
     public class QuestionController : BaseApiController {
         private readonly IFilteredLatestQuestionsFetcher _filteredLatestQuestionsFetcher;
@@ -36,6 +38,12 @@ namespace Api.Controllers {
             var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(UserId);
 
             return previousQuestions;
+        }
+
+        [HttpGet]
+        [Route("{questionId}")]
+        public QuestionDto FetchQuestion(int questionId) {
+            return _stackExchangeClient.GetQuestion(questionId);
         }
 
         [HttpGet]

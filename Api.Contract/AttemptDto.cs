@@ -12,7 +12,7 @@ namespace Api.Contract {
         [JsonProperty("attempt_date")]
         public DateTime? AttemptDate { get; set; }
         [JsonProperty("answered_correctly")]
-        public bool AnsweredCorrectly => AnswerId == AcceptedAnswerId;
+        public bool? AnsweredCorrectly => AnswerId == AcceptedAnswerId;
         [JsonProperty("score")]
         public int? Score { get; set; }
     }

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import axios from 'axios'
 
 const client = axios.create({
@@ -21,6 +20,9 @@ export default {
   },
   getPrevious() {
     return this.execute('get', 'question/previous');
+  },
+  getQuestion(questionId) {
+    return this.execute('get', `question/${questionId}`);
   },
   getAnswers(questionId) {
     return this.execute('get', `question/${questionId}/answers`);

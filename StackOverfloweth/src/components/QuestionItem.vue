@@ -1,5 +1,5 @@
 <template>
-  <b-card v-on:click="openQuestion" v-bind:title="question.title" class="mb-2">
+  <b-card v-on:click="openQuestion" v-bind:title="question.title" class="mb-3">
     <div v-html="question.body"></div>
     <div v-for="tag in question.tags" class="tag m-1">{{tag}}</div>
   </b-card>
@@ -15,8 +15,8 @@
       }
     },
     methods: {
-      openQuestion: function () {
-        this.$router.push({ name: 'question', params: { questionId: this.question.question_id } })
+      openQuestion() {
+        this.$router.push({ name: 'question', params: { question_id: this.question.question_id } })
       }
     }
   }
