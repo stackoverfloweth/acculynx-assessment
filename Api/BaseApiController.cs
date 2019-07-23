@@ -1,10 +1,16 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Http;
 
 namespace Api {
     public class BaseApiController : ApiController {
         public BaseApiController() {
-            UserId = HttpContext.Current.Request.UserHostAddress;
+            try {
+                UserId = HttpContext.Current.Request.UserHostAddress;
+            }
+            catch (Exception) {
+
+            }
         }
 
         public string UserId { get; }
