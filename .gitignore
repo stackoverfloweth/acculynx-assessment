@@ -26,3 +26,11 @@
 /Api.Contract/bin/Debug
 /Api.Core/bin/Debug
 /Data/bin/Debug
+/Api.Core.UnitTests/bin/Debug
+/Api.Core.UnitTests/obj/Debug
+/Api.UnitTests/bin/Debug
+/Api.UnitTests/obj/Debug
+/Data.UnitTests/bin/Debug
+/Data.UnitTests/obj/Debug
+/UnitTest.Framework/bin/Debug
+/UnitTest.Framework/obj/Debug

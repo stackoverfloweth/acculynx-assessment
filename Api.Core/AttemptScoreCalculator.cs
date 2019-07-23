@@ -19,7 +19,7 @@ namespace Api.Core {
                 return 100;
             }
 
-            var attemptsOnQuestion = _attemptRepository.GetAttemptsForQuestion(attempt.QuestionId);
+            var attemptsOnQuestion = _attemptRepository.GetAttemptsForQuestion(attempt.QuestionId).ToList();
             if (!attemptsOnQuestion.Any()) {
                 return 0;
             }

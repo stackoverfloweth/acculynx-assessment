@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "StackOverfloweth", "StackOverfloweth\Stackoverfloweth.njsproj", "{C32D7274-0713-4895-B8B5-2D20B0922339}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Stackoverfloweth", "StackOverfloweth\Stackoverfloweth.njsproj", "{C32D7274-0713-4895-B8B5-2D20B0922339}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{84F1FEFB-20F0-4F25-AF79-F3662FED3820}"
 EndProject
@@ -12,6 +12,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Contract", "Api.Contract\Api.Contract.csproj", "{F68F68C9-4733-4E87-B0A6-07791ED2EE99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{CBBCDCBB-3D83-4F73-A9A0-91632A8BB5C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{32E313DA-FF85-4E62-8503-EB214B4A1C27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.UnitTests", "Api.UnitTests\Api.UnitTests.csproj", "{D0D18C1B-B7AB-48F6-BAD0-4F81F8813296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Core.UnitTests", "Api.Core.UnitTests\Api.Core.UnitTests.csproj", "{F423EC99-87B6-437F-AC92-8EBB808F3B92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.UnitTests", "Data.UnitTests\Data.UnitTests.csproj", "{8274CC24-0F4F-44C7-B260-71B5C9DC8DF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.Framework", "UnitTest.Framework\UnitTest.Framework.csproj", "{3CC2E346-5182-4AD7-84C2-2A33AEB06916}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +49,31 @@ Global
 		{CBBCDCBB-3D83-4F73-A9A0-91632A8BB5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBBCDCBB-3D83-4F73-A9A0-91632A8BB5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBBCDCBB-3D83-4F73-A9A0-91632A8BB5C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D18C1B-B7AB-48F6-BAD0-4F81F8813296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D18C1B-B7AB-48F6-BAD0-4F81F8813296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D18C1B-B7AB-48F6-BAD0-4F81F8813296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D18C1B-B7AB-48F6-BAD0-4F81F8813296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F423EC99-87B6-437F-AC92-8EBB808F3B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F423EC99-87B6-437F-AC92-8EBB808F3B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F423EC99-87B6-437F-AC92-8EBB808F3B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F423EC99-87B6-437F-AC92-8EBB808F3B92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8274CC24-0F4F-44C7-B260-71B5C9DC8DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8274CC24-0F4F-44C7-B260-71B5C9DC8DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8274CC24-0F4F-44C7-B260-71B5C9DC8DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8274CC24-0F4F-44C7-B260-71B5C9DC8DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC2E346-5182-4AD7-84C2-2A33AEB06916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC2E346-5182-4AD7-84C2-2A33AEB06916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC2E346-5182-4AD7-84C2-2A33AEB06916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC2E346-5182-4AD7-84C2-2A33AEB06916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D0D18C1B-B7AB-48F6-BAD0-4F81F8813296} = {32E313DA-FF85-4E62-8503-EB214B4A1C27}
+		{F423EC99-87B6-437F-AC92-8EBB808F3B92} = {32E313DA-FF85-4E62-8503-EB214B4A1C27}
+		{8274CC24-0F4F-44C7-B260-71B5C9DC8DF1} = {32E313DA-FF85-4E62-8503-EB214B4A1C27}
+		{3CC2E346-5182-4AD7-84C2-2A33AEB06916} = {32E313DA-FF85-4E62-8503-EB214B4A1C27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E1D46F8-0370-4342-A4FD-23ABD0BED0F9}
