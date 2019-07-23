@@ -17,7 +17,7 @@ namespace Api {
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             var assemblies = new[] {
-                typeof(QuestionController).Assembly,                // Api
+                typeof(BaseApiController).Assembly,                 // Api
                 typeof(FilteredLatestQuestionsFetcher).Assembly,    // Api.Core
                 typeof(QuestionDto).Assembly,                       // Api.Contract
                 typeof(StackOverflowethContext).Assembly,           // Data

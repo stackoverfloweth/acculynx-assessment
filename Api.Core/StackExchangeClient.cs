@@ -1,6 +1,5 @@
 ﻿using Api.Contract;
 using Api.Contract.Enums;
-using RestSharp;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,8 +25,8 @@ namespace Api.Core {
             return questionList.FirstOrDefault();
         }
 
-        public IEnumerable<QuestionDto> GetQuestions(List<int> ids) {
-            var idString = string.Join(";", ids);
+        public IEnumerable<QuestionDto> GetQuestions(List<int> questionIds) {
+            var idString = string.Join(";", questionIds);
             var parameters = new List<object> { idString };
 
             return _stackExchangeRequestHandler.Execute<QuestionDto>(StackExchangeResourceEnum.LookupQuestions, parameters);

@@ -20,7 +20,7 @@ namespace Api.Core {
             _site = "stackoverflow";
         }
 
-        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters, IDictionary<string, object> data) where T : IStackExchangeResponseType {
+        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters, IDictionary<string, object> data) {
             var resource = _stackExchangeResourceFactory.FetchResource(stackExchangeResourceEnum, parameters);
             var client = new RestClient(_url);
             var request = new RestRequest(resource);
@@ -42,15 +42,15 @@ namespace Api.Core {
             return response.Data.Items;
         }
 
-        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, IDictionary<string, object> data) where T : IStackExchangeResponseType {
+        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, IDictionary<string, object> data) {
             return Execute<T>(stackExchangeResourceEnum, null, data);
         }
 
-        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters) where T : IStackExchangeResponseType {
+        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters) {
             return Execute<T>(stackExchangeResourceEnum, parameters, null);
         }
 
-        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum) where T : IStackExchangeResponseType {
+        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum) {
             return Execute<T>(stackExchangeResourceEnum, null, null);
         }
     }

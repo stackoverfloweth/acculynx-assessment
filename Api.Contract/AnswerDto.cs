@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Api.Contract {
-    public class AnswerDto : IStackExchangeResponseType {
+    public class AnswerDto {
         [JsonProperty("answer_id")]
         public int AnswerId { get; set; }
         [JsonProperty("question_id")]
