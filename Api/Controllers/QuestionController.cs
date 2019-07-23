@@ -49,7 +49,7 @@ namespace Api.Controllers {
         [HttpGet]
         [Route("{questionId}/answers")]
         public IEnumerable<AnswerDto> FetchAnswersForQuestion(int questionId) {
-            return _stackExchangeClient.GetAnswers(questionId).Items;
+            return _stackExchangeClient.GetAnswers(questionId);
         }
 
         [HttpGet]

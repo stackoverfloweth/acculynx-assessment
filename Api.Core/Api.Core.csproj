@@ -59,6 +59,10 @@
     <Compile Include="IPreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="IQuestionFilter.cs" />
     <Compile Include="IStackExchangeClient.cs" />
+    <Compile Include="IStackExchangeFilterCreator.cs" />
+    <Compile Include="IStackExchangeRequestHandler.cs" />
+    <Compile Include="StackExchangeFilterCreator.cs" />
+    <Compile Include="StackExchangeRequestHandler.cs" />
     <Compile Include="IStackExchangeResourceFactory.cs" />
     <Compile Include="PreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace Api.Contract {
     public class OwnerDto {
+        [JsonProperty("reputation")]
         public int Reputation { get; set; }
         [JsonProperty("user_id")]
         public int UserId { get; set; }

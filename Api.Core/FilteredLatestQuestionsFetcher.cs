@@ -19,7 +19,7 @@ namespace Api.Core {
 
         private List<QuestionDto> FetchQuestionsRecursively(List<QuestionDto> questionDtos, int page) {
             var questionResponseDto = _stackExchangeClient.GetLatestQuestions(page);
-            var filteredQuestionDtos = _questionFilter.FilterQuestions(questionResponseDto.Items);
+            var filteredQuestionDtos = _questionFilter.FilterQuestions(questionResponseDto);
 
             questionDtos.AddRange(filteredQuestionDtos);
 

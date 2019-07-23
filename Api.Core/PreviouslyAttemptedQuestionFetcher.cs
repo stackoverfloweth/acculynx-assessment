@@ -9,20 +9,18 @@ namespace Api.Core {
         private readonly IStackExchangeClient _stackExchangeClient;
         private readonly IAttemptedQuestionDtoAssembler _attemptedQuestionDtoAssembler;
 
-        public PreviouslyAttemptedQuestionFetcher(IAttemptRepository attemptRepository, IStackExchangeClient stackExchangeClient, IAttemptedQuestionDtoAssembler attemptedQuestionDtoAssembler)
-        {
+        public PreviouslyAttemptedQuestionFetcher(IAttemptRepository attemptRepository, IStackExchangeClient stackExchangeClient, IAttemptedQuestionDtoAssembler attemptedQuestionDtoAssembler) {
             _attemptRepository = attemptRepository;
             _stackExchangeClient = stackExchangeClient;
             _attemptedQuestionDtoAssembler = attemptedQuestionDtoAssembler;
         }
 
-        public IEnumerable<AttemptedQuestionDto> FetchQuestions(string userId)
-        {
+        public IEnumerable<AttemptedQuestionDto> FetchQuestions(string userId) {
             var attempts = _attemptRepository.GetAttempts(userId).ToList();
             var attemptQuestionIds = attempts.Select(attempt => attempt.QuestionId).ToList();
             var questionResponseDto = _stackExchangeClient.GetQuestions(attemptQuestionIds);
-            
-            return _attemptedQuestionDtoAssembler.AssembleAttemptedQuestions(attempts, questionResponseDto.Items);
+
+            return _attemptedQuestionDtoAssembler.AssembleAttemptedQuestions(attempts, questionResponseDto);
         }
     }
 }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnswerDto.cs" />
+    <Compile Include="IStackExchangeResponseType.cs" />
     <Compile Include="ItemResponseDto.cs" />
     <Compile Include="AttemptDto.cs" />
     <Compile Include="AttemptedQuestionDto.cs" />

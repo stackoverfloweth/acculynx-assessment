@@ -1,85 +1,42 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Api.Contract;
+﻿using Api.Contract;
 using Api.Contract.Enums;
 using RestSharp;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Api.Core {
     public class StackExchangeClient : IStackExchangeClient {
-        private readonly IStackExchangeResourceFactory _stackExchangeResourceFactory;
-        private readonly IRestClient _restClient;
-        private readonly string _filterId;
-        private readonly string _site;
+        private readonly IStackExchangeRequestHandler _stackExchangeRequestHandler;
 
-        public StackExchangeClient(IStackExchangeResourceFactory stackExchangeResourceFactory) {
-            _stackExchangeResourceFactory = stackExchangeResourceFactory;
-            _restClient = new RestClient("https://api.stackexchange.com/2.2");
-            _filterId = GetFieldFilterId();
-            _site = "stackoverflow";
+        public StackExchangeClient(IStackExchangeRequestHandler stackExchangeRequestHandler) {
+            _stackExchangeRequestHandler = stackExchangeRequestHandler;
         }
 
-        public ItemResponseDto<QuestionDto> GetLatestQuestions(int page) {
-            var resource = _stackExchangeResourceFactory.FetchResource(StackExchangeResourceEnum.GetQuestions);
-            var request = new RestRequest(resource);
-            request.AddParameter("filter", _filterId);
-            request.AddParameter("site", _site);
-            request.AddParameter("pagesize", 100);
-            request.AddParameter("page", page);
-
-            var response = _restClient.Execute<ItemResponseDto<QuestionDto>>(request);
-            if (response?.Data == null || response.Data.QuotaRemaining == 0) {
-                return null;
-            }
-
-            return response.Data;
+        public IEnumerable<QuestionDto> GetLatestQuestions(int page) {
+            var data = new Dictionary<string, object> {
+                {"pagesize", 100},
+                {"page", page}
+            };
+            return _stackExchangeRequestHandler.Execute<QuestionDto>(StackExchangeResourceEnum.GetQuestions, data);
         }
 
         public QuestionDto GetQuestion(int questionId) {
-            var response = GetQuestions(new List<int> { questionId });
-            var questionList = response?.Items.ToList();
+            var questionList = GetQuestions(new List<int> { questionId }).ToList();
 
-            return questionList?[0];
+            return questionList.FirstOrDefault();
         }
 
-        public ItemResponseDto<QuestionDto> GetQuestions(List<int> ids) {
-            var resource = _stackExchangeResourceFactory.FetchResource(StackExchangeResourceEnum.LookupQuestions, string.Join(";", ids));
-            var request = new RestRequest(resource);
-            request.AddParameter("filter", _filterId);
-            request.AddParameter("site", _site);
+        public IEnumerable<QuestionDto> GetQuestions(List<int> ids) {
+            var idString = string.Join(";", ids);
+            var parameters = new List<object> { idString };
 
-            var response = _restClient.Execute<ItemResponseDto<QuestionDto>>(request);
-            if (response?.Data == null || response.Data.QuotaRemaining == 0) {
-                return null;
-            }
-
-            return response.Data;
+            return _stackExchangeRequestHandler.Execute<QuestionDto>(StackExchangeResourceEnum.LookupQuestions, parameters);
         }
 
-        public ItemResponseDto<AnswerDto> GetAnswers(int id) {
-            var resource = _stackExchangeResourceFactory.FetchResource(StackExchangeResourceEnum.GetQuestionAnswers, id);
-            var request = new RestRequest(resource);
-            request.AddParameter("filter", _filterId);
-            request.AddParameter("site", _site);
+        public IEnumerable<AnswerDto> GetAnswers(int questionId) {
+            var parameters = new List<object> { questionId };
 
-            var response = _restClient.Execute<ItemResponseDto<AnswerDto>>(request);
-            if (response?.Data == null || response.Data.QuotaRemaining == 0) {
-                return null;
-            }
-
-            return response.Data;
-        }
-
-        private string GetFieldFilterId() {
-            var resource = _stackExchangeResourceFactory.FetchResource(StackExchangeResourceEnum.CreateFilter);
-            var request = new RestRequest(resource);
-            request.AddParameter("include", "question.accepted_answer_id;question.body;answer.body");
-
-            var response = _restClient.Execute<ItemResponseDto<FilterDto>>(request);
-            if (response?.Data == null || response.Data.QuotaRemaining == 0) {
-                return null;
-            }
-
-            return response.Data.Items?.FirstOrDefault()?.Filter;
+            return _stackExchangeRequestHandler.Execute<AnswerDto>(StackExchangeResourceEnum.GetQuestionAnswers, parameters);
         }
     }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Api.Contract {
-    public class QuestionDto {
+    public class QuestionDto : IStackExchangeResponseType {
         [JsonProperty("question_id")]
         public int QuestionId { get; set; }
         [JsonProperty("accepted_answer_id")]
@@ -26,7 +26,6 @@ namespace Api.Contract {
         public string Body { get; set; }
         [JsonProperty("tags")]
         public IEnumerable<string> Tags { get; set; }
-
         [JsonProperty("owner")]
         public OwnerDto Owner { get; set; }
     }

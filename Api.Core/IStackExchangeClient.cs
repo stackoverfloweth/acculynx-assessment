@@ -3,9 +3,9 @@ using Api.Contract;
 
 namespace Api.Core {
     public interface IStackExchangeClient {
-        ItemResponseDto<QuestionDto> GetLatestQuestions(int page);
-        ItemResponseDto<QuestionDto> GetQuestions(List<int> ids);
-        ItemResponseDto<AnswerDto> GetAnswers(int id);
+        IEnumerable<QuestionDto> GetLatestQuestions(int page);
+        IEnumerable<QuestionDto> GetQuestions(List<int> ids);
+        IEnumerable<AnswerDto> GetAnswers(int questionId);
         QuestionDto GetQuestion(int questionId);
     }
 }
