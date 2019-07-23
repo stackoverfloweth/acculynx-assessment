@@ -22,6 +22,8 @@
       </b-navbar>
     </header>
     <main>
+      <b-alert variant="success" show>Nice Job! You guessed the right answer!</b-alert>
+      <b-alert variant="danger" show>Oops! That wasn't the right answer</b-alert>
       <router-view></router-view>
     </main>
   </div>
@@ -36,6 +38,7 @@
 <style>
   .card {
     cursor: pointer;
+    overflow: auto;
   }
 
   .card:hover {

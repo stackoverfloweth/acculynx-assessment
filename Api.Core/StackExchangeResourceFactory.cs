@@ -2,7 +2,7 @@
 using System;
 
 namespace Api.Core {
-    public class StackExchangeResourceFetcher : IStackExchangeResourceFetcher {
+    public class StackExchangeResourceFactory : IStackExchangeResourceFactory {
         public string FetchResource(StackExchangeResourceEnum stackExchangeResourceEnum, object argument)
         {
             switch (stackExchangeResourceEnum)

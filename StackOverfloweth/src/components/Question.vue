@@ -55,7 +55,6 @@
 </script>
 
 <style scope>
-
   .answers {
     border-top: 1px solid #f0f0f0;
     margin-top: 15px;
