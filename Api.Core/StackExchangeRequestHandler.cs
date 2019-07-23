@@ -12,7 +12,7 @@ namespace Api.Core {
         private readonly string _key;
         private readonly string _site;
 
-        protected StackExchangeRequestHandler(IStackExchangeResourceFactory stackExchangeResourceFactory, IStackExchangeFilterCreator stackExchangeFilterCreator) {
+        public StackExchangeRequestHandler(IStackExchangeResourceFactory stackExchangeResourceFactory, IStackExchangeFilterCreator stackExchangeFilterCreator) {
             _stackExchangeResourceFactory = stackExchangeResourceFactory;
             _stackExchangeFilterCreator = stackExchangeFilterCreator;
             _url = "https://api.stackexchange.com/2.2";
