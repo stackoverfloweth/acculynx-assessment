@@ -1,6 +1,7 @@
 ﻿using Api.Contract;
 using Api.Contract.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Api.Core {
     public class StackExchangeRequestHandler : IStackExchangeRequestHandler {
@@ -20,7 +21,7 @@ namespace Api.Core {
             _site = "stackoverflow";
         }
 
-        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters, IDictionary<string, object> data) {
+        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters, Dictionary<string, object> data) {
             var resource = _stackExchangeResourceFactory.FetchResource(stackExchangeResourceEnum, parameters);
             var client = _restSharpWrapper.CreateRestClient(_url);
             var request = _restSharpWrapper.CreateRestRequest(resource);
@@ -30,8 +31,10 @@ namespace Api.Core {
             request.AddParameter("key", _key);
             request.AddParameter("site", _site);
 
-            foreach (var dataItem in data) {
-                request.AddParameter(dataItem.Key, dataItem.Value);
+            if (data != null && data.Keys.Any()) {
+                foreach (var dataItem in data) {
+                    request.AddParameter(dataItem.Key, dataItem.Value);
+                }
             }
 
             var response = client.Execute<ItemResponseDto<T>>(request);
@@ -42,7 +45,7 @@ namespace Api.Core {
             return response.Data.Items;
         }
 
-        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, IDictionary<string, object> data) {
+        public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, Dictionary<string, object> data) {
             return Execute<T>(stackExchangeResourceEnum, null, data);
         }
 

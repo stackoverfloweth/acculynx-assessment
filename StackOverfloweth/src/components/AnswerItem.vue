@@ -22,10 +22,14 @@
     },
     methods: {
       selectAnswer() {
+        this.$parent.loading = true;
         Api.submitAttempt({
           answer_id: this.answer.answer_id,
           accepted_answer_id: this.question.accepted_answer_id,
           question_id: this.question.question_id
+        }, (response) => {
+            this.$parent.loading = false;
+            this.$router.push({ name: 'review', params: { question_id: response.data.question_id } })
         })
       }
     }

@@ -1,15 +1,19 @@
 <template>
-  <div>
-    <div v-if="loading" class="text-center">
-      <img src="../assets/loading.gif" />
-    </div>
-    <div v-if="!loading" class="container">
-      <div v-if="attempts.length === 0" class="text-center text-muted">
-        Hmm... I don't have any record of attempts made from this user
-      </div>
-      <div class="row">
-        <div class="col">
-          <attempt-item v-for="(item, index) in attempts" v-bind:key="item.question.question_id" :attempt="item"></attempt-item>
+  <div class="container">
+    <div>
+      <b-alert variant="success" show>Nice Job! You guessed the right answer!</b-alert>
+      <b-alert variant="danger" show>Oops! That wasn't the right answer</b-alert>
+      <div class="col">
+        <h3>{{question.title}}</h3>
+        <div v-html="question.body"></div>
+        <div v-for="tag in question.tags" class="tag m-1">{{tag}}</div>
+        <div class="answers">
+          <div v-if="loading" class="text-center">
+            <img src="../assets/loading.gif" />
+          </div>
+          <div v-if="!loading" class="text-center">
+            <answer-item v-for="item in answers" v-bind:key="item.answer_id" :answer="item" :question="question"></answer-item>
+          </div>
         </div>
       </div>
     </div>
@@ -18,27 +22,32 @@
 
 <script>
   import Api from '@/api';
-  import AttemptItem from '@/components/AttemptItem';
+  import AnswerItem from '@/components/AnswerItem';
 
   export default {
     data() {
       return {
         loading: true,
-        attempts: []
+        question: {},
+        answers: []
       }
     },
     components: {
-      AttemptItem
+      AnswerItem
     },
     mounted() {
-      this.loadAttempts()
+      this.loadQuestion()
+      this.loadAnswers()
     },
     methods: {
-      async loadAttempts() {
+      async loadQuestion() {
+        this.question = await Api.getQuestion(this.$route.params.question_id)
+      },
+      async loadAnswers() {
         this.loading = true
 
         try {
-          this.attempts = await Api.getPrevious()
+          this.answers = await Api.getAnswers(this.$route.params.question_id)
         } finally {
           this.loading = false
         }

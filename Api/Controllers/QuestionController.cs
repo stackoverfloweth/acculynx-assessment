@@ -35,7 +35,7 @@ namespace Api.Controllers {
         [HttpGet]
         [Route("previous")]
         public IEnumerable<AttemptedQuestionDto> FetchPreviousQuestions() {
-            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchQuestions(UserId);
+            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchAttemptedQuestions(UserId);
 
             return previousQuestions;
         }

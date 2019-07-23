@@ -53,7 +53,7 @@ namespace Api.UnitTests {
             controller.FetchPreviousQuestions();
 
             //  assert
-            questionFetcherMock.Verify(x => x.FetchQuestions(It.IsAny<string>()), Times.Once);
+            questionFetcherMock.Verify(x => x.FetchAttemptedQuestions(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Api.UnitTests {
             // arrange
             var attemptQuestionDtos = AutoFixture.CreateMany<AttemptedQuestionDto>().ToList();
             AutoFixture.Freeze<Mock<IPreviouslyAttemptedQuestionFetcher>>()
-                .Setup(x => x.FetchQuestions(It.IsAny<string>()))
+                .Setup(x => x.FetchAttemptedQuestions(It.IsAny<string>()))
                 .Returns(attemptQuestionDtos);
 
             // act

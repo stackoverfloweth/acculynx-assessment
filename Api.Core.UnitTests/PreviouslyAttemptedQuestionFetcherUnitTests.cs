@@ -20,7 +20,7 @@ namespace Api.Core.UnitTests {
 
             // act 
             var fetcher = AutoFixture.Create<PreviouslyAttemptedQuestionFetcher>();
-            fetcher.FetchQuestions(userId);
+            fetcher.FetchAttemptedQuestions(userId);
 
             // assert
             repositoryMock.Verify(x => x.GetAttempts(userId), Times.Once);
@@ -41,7 +41,7 @@ namespace Api.Core.UnitTests {
 
             // act 
             var fetcher = AutoFixture.Create<PreviouslyAttemptedQuestionFetcher>();
-            fetcher.FetchQuestions(userId);
+            fetcher.FetchAttemptedQuestions(userId);
 
             // assert
             clientMock.Verify(x => x.GetQuestions(attemptIds), Times.Once);
@@ -66,7 +66,7 @@ namespace Api.Core.UnitTests {
 
             // act 
             var fetcher = AutoFixture.Create<PreviouslyAttemptedQuestionFetcher>();
-            fetcher.FetchQuestions(userId);
+            fetcher.FetchAttemptedQuestions(userId);
 
             // assert
             assemblerMock.Verify(x => x.AssembleAttemptedQuestions(attempts, questionDtos), Times.Once);
@@ -84,7 +84,7 @@ namespace Api.Core.UnitTests {
 
             // act 
             var fetcher = AutoFixture.Create<PreviouslyAttemptedQuestionFetcher>();
-            var response = fetcher.FetchQuestions(userId);
+            var response = fetcher.FetchAttemptedQuestions(userId);
 
             // assert
             response.Should().BeEquivalentTo(attemptedQuestionDtos);

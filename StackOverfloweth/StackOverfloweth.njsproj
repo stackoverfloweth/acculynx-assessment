@@ -41,8 +41,9 @@
     <Content Include="src\assets\logo.png" />
     <Content Include="src\components\AttemptItem.vue" />
     <Content Include="src\components\Review.vue" />
+    <Content Include="src\components\ReviewList.vue" />
     <Content Include="src\components\Question.vue" />
-    <Content Include="src\components\Primary.vue" />
+    <Content Include="src\components\QuestionList.vue" />
     <Content Include="src\components\AnswerItem.vue" />
     <Content Include="src\components\QuestionItem.vue" />
     <Content Include="src\main.js" />

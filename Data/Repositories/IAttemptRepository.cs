@@ -6,5 +6,6 @@ namespace Data.Repositories {
         IEnumerable<Attempt> GetAttempts(string userId);
         void InsertAttempt(Attempt attempt);
         IEnumerable<Attempt> GetAttemptsForQuestion(int attempt);
+        Attempt GetAttempt(int questionId, string userId);
     }
 }

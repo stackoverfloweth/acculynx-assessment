@@ -122,5 +122,30 @@ namespace Data.UnitTests {
             // assert
             response.Should().BeEquivalentTo(matchingAttempts);
         }
+
+        [Fact]
+        public void GetAttempt_Always_ReturnsSingleOrDefaultWhereUserIdAndQuestionIdMatch() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
+            var userId = AutoFixture.Create<string>();
+
+            var matchingAttempt = AutoFixture.Build<Attempt>()
+                .With(x => x.QuestionId, questionId)
+                .With(x => x.UserId, userId)
+                .Create();
+            var nonMatchingAttempts = AutoFixture.CreateMany<Attempt>().ToList();
+            nonMatchingAttempts.Insert(RandomGenerator.Next(nonMatchingAttempts.Count), matchingAttempt);
+
+            AutoFixture.Freeze<Mock<IStackOverflowethContext>>()
+                .SetupGet(x => x.Attempts)
+                .Returns(GetMockDbSet(nonMatchingAttempts).Object);
+
+            // act
+            var repository = AutoFixture.Create<AttemptRepository>();
+            var response = repository.GetAttempt(questionId, userId);
+
+            // assert
+            response.Should().Be(matchingAttempt);
+        }
     }
 }

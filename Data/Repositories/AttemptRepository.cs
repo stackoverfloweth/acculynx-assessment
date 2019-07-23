@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Entities;
 
 namespace Data.Repositories {
     public class AttemptRepository : IAttemptRepository {
@@ -35,6 +32,11 @@ namespace Data.Repositories {
             return _dbContext.Attempts
                 .Where(attempt=> attempt.QuestionId == questionId)
                 .ToList();
+        }
+
+        public Attempt GetAttempt(int questionId, string userId) {
+            return _dbContext.Attempts.SingleOrDefault(attempt =>
+                attempt.UserId == userId && attempt.QuestionId == questionId);
         }
     }
 }

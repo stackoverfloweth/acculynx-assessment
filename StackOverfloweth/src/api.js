@@ -6,13 +6,17 @@ const client = axios.create({
 });
 
 export default {
-  execute(method, url, data) {
+  execute(method, url, data, callback) {
     return client({
       method,
       url,
       data
-    }).then(request => {
-      return request.data;
+    }).then(response => {
+      if (typeof callback == "function") {
+        callback(response)
+      }
+
+      return response.data;
     });
   },
   getLatest() {
@@ -30,7 +34,10 @@ export default {
   getAttempts(questionId) {
     return this.execute('get', `question/${questionId}/attempts`);
   },
-  submitAttempt(attempt) {
-    return this.execute('post', 'attempt', attempt);
+  getAttempt(questionId) {
+    return this.execute('get', `question/${questionId}/attempt`);
+  },
+  submitAttempt(attempt, callback) {
+    return this.execute('post', 'attempt', attempt, callback);
   }
 };
