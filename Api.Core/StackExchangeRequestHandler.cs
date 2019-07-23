@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Api.Contract;
+﻿using Api.Contract;
 using Api.Contract.Enums;
-using RestSharp;
+using System.Collections.Generic;
 
 namespace Api.Core {
     public class StackExchangeRequestHandler : IStackExchangeRequestHandler {
         private readonly IStackExchangeResourceFactory _stackExchangeResourceFactory;
         private readonly IStackExchangeFilterCreator _stackExchangeFilterCreator;
+        private readonly IRestSharpWrapper _restSharpWrapper;
         private readonly string _url;
         private readonly string _key;
         private readonly string _site;
 
-        public StackExchangeRequestHandler(IStackExchangeResourceFactory stackExchangeResourceFactory, IStackExchangeFilterCreator stackExchangeFilterCreator) {
+        public StackExchangeRequestHandler(IStackExchangeResourceFactory stackExchangeResourceFactory, IStackExchangeFilterCreator stackExchangeFilterCreator, IRestSharpWrapper restSharpWrapper) {
             _stackExchangeResourceFactory = stackExchangeResourceFactory;
             _stackExchangeFilterCreator = stackExchangeFilterCreator;
+            _restSharpWrapper = restSharpWrapper;
             _url = "https://api.stackexchange.com/2.2";
             _key = "cXOea6bOwSD2EuIw7XPIlA((";
             _site = "stackoverflow";
@@ -22,9 +22,9 @@ namespace Api.Core {
 
         public IEnumerable<T> Execute<T>(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters, IDictionary<string, object> data) {
             var resource = _stackExchangeResourceFactory.FetchResource(stackExchangeResourceEnum, parameters);
-            var client = new RestClient(_url);
-            var request = new RestRequest(resource);
-            var filter = _stackExchangeFilterCreator.CreateFilter(client);
+            var client = _restSharpWrapper.CreateRestClient(_url);
+            var request = _restSharpWrapper.CreateRestRequest(resource);
+            var filter = _stackExchangeFilterCreator.CreateFilter();
 
             request.AddParameter("filter", filter);
             request.AddParameter("key", _key);

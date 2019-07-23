@@ -58,9 +58,11 @@
     <Compile Include="IFilteredLatestQuestionsFetcher.cs" />
     <Compile Include="IPreviouslyAttemptedQuestionFetcher.cs" />
     <Compile Include="IQuestionFilter.cs" />
+    <Compile Include="IRestSharpWrapper.cs" />
     <Compile Include="IStackExchangeClient.cs" />
     <Compile Include="IStackExchangeFilterCreator.cs" />
     <Compile Include="IStackExchangeRequestHandler.cs" />
+    <Compile Include="RestSharpWrapper.cs" />
     <Compile Include="StackExchangeFilterCreator.cs" />
     <Compile Include="StackExchangeRequestHandler.cs" />
     <Compile Include="IStackExchangeResourceFactory.cs" />
