@@ -39,7 +39,7 @@
     <Content Include="src\App.vue" />
     <Content Include="src\assets\loading.gif" />
     <Content Include="src\assets\logo.png" />
-    <Content Include="src\components\AttemptItem.vue" />
+    <Content Include="src\components\ReviewItem.vue" />
     <Content Include="src\components\Review.vue" />
     <Content Include="src\components\ReviewList.vue" />
     <Content Include="src\components\Question.vue" />

@@ -4,6 +4,6 @@ using Data.Entities;
 
 namespace Api.Core {
     public interface IAttemptedQuestionDtoAssembler {
-        IEnumerable<AttemptedQuestionDto> AssembleAttemptedQuestions(IEnumerable<Attempt> attempts, IEnumerable<QuestionDto> questions);
+        IEnumerable<AttemptedQuestionDto> AssembleAttemptedQuestions(IEnumerable<AttemptDto> attemptDtos, IEnumerable<QuestionDto> questions);
     }
 }

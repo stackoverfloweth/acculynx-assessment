@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <div>
-      <b-alert variant="success" show>Nice Job! You guessed the right answer!</b-alert>
-      <b-alert variant="danger" show>Oops! That wasn't the right answer</b-alert>
+      <b-alert v-if="attemptedQuestion.attempt.answered_correctly" variant="success" show>Nice Job! You guessed the right answer!</b-alert>
+      <b-alert v-if="!attemptedQuestion.attempt.answered_correctly" variant="danger" show>Oops! That wasn't the right answer</b-alert>
       <div class="col">
-        <h3>{{question.title}}</h3>
-        <div v-html="question.body"></div>
-        <div v-for="tag in question.tags" class="tag m-1">{{tag}}</div>
+        <h3>{{attemptedQuestion.question.title}}</h3>
+        <div v-html="attemptedQuestion.question.body"></div>
+        <div v-for="tag in attemptedQuestion.question.tags" class="tag m-1">{{tag}}</div>
         <div class="answers">
           <div v-if="loading" class="text-center">
             <img src="../assets/loading.gif" />
           </div>
-          <div v-if="!loading" class="text-center">
-            <answer-item v-for="item in answers" v-bind:key="item.answer_id" :answer="item" :question="question"></answer-item>
+          <div v-if="!loading">
+            <answer-item v-for="answer in answers" v-bind:key="answer.answer_id" :attempt="answer.answer_id == attemptedQuestion.attempt.answer_id ? attemptedQuestion.attempt : {}" :answer="answer" :question="attemptedQuestion.question" :reviewMode="true"></answer-item>
           </div>
         </div>
       </div>
@@ -28,7 +28,10 @@
     data() {
       return {
         loading: true,
-        question: {},
+        attemptedQuestion: {
+          question: {},
+          attempt: {}
+        },
         answers: []
       }
     },
@@ -41,7 +44,7 @@
     },
     methods: {
       async loadQuestion() {
-        this.question = await Api.getQuestion(this.$route.params.question_id)
+        this.attemptedQuestion = await Api.getAttemptedQuestion(this.$route.params.question_id)
       },
       async loadAnswers() {
         this.loading = true

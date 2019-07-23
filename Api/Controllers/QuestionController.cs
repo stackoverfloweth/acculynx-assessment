@@ -3,6 +3,7 @@ using Api.Core;
 using AutoMapper;
 using Data.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -11,14 +12,12 @@ namespace Api.Controllers {
     [RoutePrefix("question")]
     public class QuestionController : BaseApiController {
         private readonly IFilteredLatestQuestionsFetcher _filteredLatestQuestionsFetcher;
-        private readonly IPreviouslyAttemptedQuestionFetcher _previouslyAttemptedQuestionFetcher;
         private readonly IStackExchangeClient _stackExchangeClient;
         private readonly IAttemptRepository _attemptRepository;
         private readonly IMapper _mapper;
 
-        public QuestionController(IFilteredLatestQuestionsFetcher filteredLatestQuestionsFetcher, IPreviouslyAttemptedQuestionFetcher previouslyAttemptedQuestionFetcher, IStackExchangeClient stackExchangeClient, IAttemptRepository attemptRepository, IMapper mapper) {
+        public QuestionController(IFilteredLatestQuestionsFetcher filteredLatestQuestionsFetcher, IStackExchangeClient stackExchangeClient, IAttemptRepository attemptRepository, IMapper mapper) {
             _filteredLatestQuestionsFetcher = filteredLatestQuestionsFetcher;
-            _previouslyAttemptedQuestionFetcher = previouslyAttemptedQuestionFetcher;
             _stackExchangeClient = stackExchangeClient;
             _attemptRepository = attemptRepository;
             _mapper = mapper;
@@ -33,14 +32,6 @@ namespace Api.Controllers {
         }
 
         [HttpGet]
-        [Route("previous")]
-        public IEnumerable<AttemptedQuestionDto> FetchPreviousQuestions() {
-            var previousQuestions = _previouslyAttemptedQuestionFetcher.FetchAttemptedQuestions(UserId);
-
-            return previousQuestions;
-        }
-
-        [HttpGet]
         [Route("{questionId}")]
         public QuestionDto FetchQuestion(int questionId) {
             return _stackExchangeClient.GetQuestion(questionId);
@@ -49,7 +40,12 @@ namespace Api.Controllers {
         [HttpGet]
         [Route("{questionId}/answers")]
         public IEnumerable<AnswerDto> FetchAnswersForQuestion(int questionId) {
-            return _stackExchangeClient.GetAnswers(questionId);
+            var answerDtos = _stackExchangeClient.GetAnswers(questionId).ToList();
+            foreach (var answerDto in answerDtos) {
+                answerDto.AttemptCount = _attemptRepository.GetAttemptsForAnswer(answerDto.AnswerId).Count();
+            }
+
+            return answerDtos;
         }
 
         [HttpGet]

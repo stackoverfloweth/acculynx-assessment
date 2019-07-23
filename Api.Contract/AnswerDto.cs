@@ -19,5 +19,7 @@ namespace Api.Contract {
         public DateTime CreationDate { get; set; }
         [JsonProperty("owner")]
         public OwnerDto Owner { get; set; }
+        [JsonProperty("attempt_count")]
+        public int AttemptCount { get; set; }
     }
 }

@@ -38,5 +38,10 @@ namespace Data.Repositories {
             return _dbContext.Attempts.SingleOrDefault(attempt =>
                 attempt.UserId == userId && attempt.QuestionId == questionId);
         }
+
+        public IEnumerable<Attempt> GetAttemptsForAnswer(int answerId) {
+            return _dbContext.Attempts
+                .Where(attempt => attempt.AnswerId == answerId);
+        }
     }
 }

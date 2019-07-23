@@ -9,7 +9,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <question-item v-for="(item, index) in questions" v-bind:key="item.question_id" :question="item"></question-item>
+          <question-item v-for="(question, index) in questions" v-bind:key="question.question_id" :question="question"></question-item>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
         this.loading = true
 
         try {
-          this.questions = await Api.getLatest()
+          this.questions = await Api.getLatestQuestions()
         } finally {
           this.loading = false
         }

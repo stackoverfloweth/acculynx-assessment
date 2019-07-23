@@ -19,11 +19,8 @@ export default {
       return response.data;
     });
   },
-  getLatest() {
+  getLatestQuestions() {
     return this.execute('get', 'question/latest');
-  },
-  getPrevious() {
-    return this.execute('get', 'question/previous');
   },
   getQuestion(questionId) {
     return this.execute('get', `question/${questionId}`);
@@ -34,8 +31,11 @@ export default {
   getAttempts(questionId) {
     return this.execute('get', `question/${questionId}/attempts`);
   },
-  getAttempt(questionId) {
-    return this.execute('get', `question/${questionId}/attempt`);
+  getPreviousQuestions() {
+    return this.execute('get', 'attempt/previous');
+  },
+  getAttemptedQuestion(questionId) {
+    return this.execute('get', `attempt/${questionId}`);
   },
   submitAttempt(attempt, callback) {
     return this.execute('post', 'attempt', attempt, callback);
