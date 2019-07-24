@@ -3,6 +3,6 @@ using System.Collections.Generic;
 
 namespace Api.Core {
     public interface IFilteredLatestQuestionsFetcher {
-        IEnumerable<QuestionDto> FetchQuestions();
+        IEnumerable<QuestionDto> FetchQuestions(string userId);
     }
 }

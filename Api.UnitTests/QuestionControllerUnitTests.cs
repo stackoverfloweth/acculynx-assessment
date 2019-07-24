@@ -24,7 +24,7 @@ namespace Api.UnitTests {
             controller.FetchLatestQuestions();
 
             //  assert
-            questionFetcherMock.Verify(x => x.FetchQuestions(), Times.Once);
+            questionFetcherMock.Verify(x => x.FetchQuestions(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Api.UnitTests {
             // arrange
             var questionDtos = AutoFixture.CreateMany<QuestionDto>().ToList();
             AutoFixture.Freeze<Mock<IFilteredLatestQuestionsFetcher>>()
-                .Setup(x => x.FetchQuestions())
+                .Setup(x => x.FetchQuestions(It.IsAny<string>()))
                 .Returns(questionDtos);
 
             // act

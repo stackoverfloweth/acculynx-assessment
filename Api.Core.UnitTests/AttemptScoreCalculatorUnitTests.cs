@@ -62,7 +62,7 @@ namespace Api.Core.UnitTests {
             var response = calculator.CalculateScore(attempt);
 
             //  assert
-            var score = (double)matchingAttempts.Count / nonMatchingAttempts.Count * 100;
+            var score = (double)(matchingAttempts.Count - 1) / nonMatchingAttempts.Count * 100;
             response.Should().Be((int)Math.Round(score));
         }
     }

@@ -24,7 +24,7 @@ namespace Api.Controllers {
         [HttpGet]
         [Route("latest")]
         public IEnumerable<QuestionDto> FetchLatestQuestions() {
-            var latestQuestions = _filteredLatestQuestionsFetcher.FetchQuestions();
+            var latestQuestions = _filteredLatestQuestionsFetcher.FetchQuestions(UserId);
 
             return latestQuestions;
         }
