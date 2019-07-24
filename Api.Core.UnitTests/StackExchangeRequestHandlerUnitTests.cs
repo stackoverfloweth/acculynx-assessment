@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Api.Contract;
+﻿using Api.Contract;
 using Api.Contract.Enums;
 using FluentAssertions;
 using Moq;
 using Ploeh.AutoFixture;
 using RestSharp;
+using System.Collections.Generic;
+using System.Linq;
 using UnitTest.Framework;
 using Xunit;
 
@@ -25,7 +25,7 @@ namespace Api.Core.UnitTests {
             requestHandler.Execute<QuestionDto>(resourceEnum, parameters, data);
 
             // assert
-            resourceFetcherMock.Verify(x=>x.FetchResource(resourceEnum, parameters), Times.Once);
+            resourceFetcherMock.Verify(x => x.FetchResource(resourceEnum, parameters), Times.Once);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace Api.Core.UnitTests {
             var resourceEnum = AutoFixture.Create<StackExchangeResourceEnum>();
             var parameters = AutoFixture.CreateMany<object>().ToList();
             var data = AutoFixture.Create<Dictionary<string, object>>();
-            
+
             var restSharpWrapperMock = AutoFixture.Freeze<Mock<IRestSharpWrapper>>();
 
             // act
@@ -128,7 +128,7 @@ namespace Api.Core.UnitTests {
             requestHandler.Execute<QuestionDto>(resourceEnum, parameters, data);
 
             // assert
-            restRequestMock.Verify(x=>x.AddParameter(key, value));
+            restRequestMock.Verify(x => x.AddParameter(key, value));
         }
 
         [Fact]

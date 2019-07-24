@@ -16,6 +16,11 @@ namespace Api.Core {
         }
 
         public AttemptDto SubmitAttempt(AttemptDto attemptDto, string userId) {
+            if (_attemptRepository.GetAttempt(attemptDto.QuestionId, userId) != null) {
+                //user cannot submit attempt for same question multiple times.
+                return null;
+            }
+
             var attempt = _mapper.Map<Attempt>(attemptDto);
             var score = _attemptScoreCalculator.CalculateScore(attempt);
 

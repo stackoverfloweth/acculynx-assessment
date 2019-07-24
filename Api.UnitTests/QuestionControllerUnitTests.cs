@@ -1,166 +1,217 @@
-﻿//using Api.Contract;
-//using Api.Controllers;
-//using Api.Core;
-//using AutoMapper;
-//using Data.Entities;
-//using Data.Repositories;
-//using FluentAssertions;
-//using Moq;
-//using Ploeh.AutoFixture;
-//using System.Collections.Generic;
-//using System.Linq;
-//using UnitTest.Framework;
-//using Xunit;
+﻿using Api.Contract;
+using Api.Controllers;
+using Api.Core;
+using AutoMapper;
+using Data.Entities;
+using Data.Repositories;
+using FluentAssertions;
+using Moq;
+using Ploeh.AutoFixture;
+using System.Collections.Generic;
+using System.Linq;
+using UnitTest.Framework;
+using Xunit;
 
-//namespace Api.UnitTests {
-//    public class QuestionControllerUnitTests : UnitTestBase {
-//        [Fact]
-//        public void FetchLatestQuestions_Always_CallsIFilteredLatestQuestionsFetcherFetchQuestionsOnce() {
-//            // arrange
-//            var questionFetcherMock = AutoFixture.Freeze<Mock<IFilteredLatestQuestionsFetcher>>();
+namespace Api.UnitTests {
+    public class QuestionControllerUnitTests : UnitTestBase {
+        [Fact]
+        public void FetchLatestQuestions_Always_CallsIFilteredLatestQuestionsFetcherFetchQuestionsOnce() {
+            // arrange
+            var questionFetcherMock = AutoFixture.Freeze<Mock<IFilteredLatestQuestionsFetcher>>();
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            controller.FetchLatestQuestions();
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.FetchLatestQuestions();
 
-//            //  assert
-//            questionFetcherMock.Verify(x => x.FetchQuestions(), Times.Once);
-//        }
+            //  assert
+            questionFetcherMock.Verify(x => x.FetchQuestions(), Times.Once);
+        }
 
-//        [Fact]
-//        public void FetchLatestQuestions_Always_ReturnsResponseFromIFilteredLatestQuestionsFetcher() {
-//            // arrange
-//            var questionDtos = AutoFixture.CreateMany<QuestionDto>().ToList();
-//            AutoFixture.Freeze<Mock<IFilteredLatestQuestionsFetcher>>()
-//                .Setup(x => x.FetchQuestions())
-//                .Returns(questionDtos);
+        [Fact]
+        public void FetchLatestQuestions_Always_ReturnsResponseFromIFilteredLatestQuestionsFetcher() {
+            // arrange
+            var questionDtos = AutoFixture.CreateMany<QuestionDto>().ToList();
+            AutoFixture.Freeze<Mock<IFilteredLatestQuestionsFetcher>>()
+                .Setup(x => x.FetchQuestions())
+                .Returns(questionDtos);
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            var response = controller.FetchLatestQuestions();
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            var response = controller.FetchLatestQuestions();
 
-//            //  assert
-//            response.Should().BeEquivalentTo(questionDtos);
-//        }
+            //  assert
+            response.Should().BeEquivalentTo(questionDtos);
+        }
 
-//        [Fact]
-//        public void FetchPreviousQuestions_Always_CallsIPreviouslyAttemptedQuestionFetcherFetchQuestionsOnce() {
-//            // arrange
-//            var questionFetcherMock = AutoFixture.Freeze<Mock<IPreviouslyAttemptedQuestionFetcher>>();
+        [Fact]
+        public void FetchAnswersForQuestion_Always_CallsIStackExchangeClientFetchAnswersForQuestionOnce() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            controller.FetchPreviousQuestions();
+            var clientMock = AutoFixture.Freeze<Mock<IStackExchangeClient>>();
 
-//            //  assert
-//            questionFetcherMock.Verify(x => x.FetchAttemptedQuestions(It.IsAny<string>()), Times.Once);
-//        }
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.FetchAnswersForQuestion(questionId);
 
-//        [Fact]
-//        public void FetchPreviousQuestions_Always_ReturnsResponseFromIPreviouslyAttemptedQuestionFetcher() {
-//            // arrange
-//            var attemptQuestionDtos = AutoFixture.CreateMany<AttemptedQuestionDto>().ToList();
-//            AutoFixture.Freeze<Mock<IPreviouslyAttemptedQuestionFetcher>>()
-//                .Setup(x => x.FetchAttemptedQuestions(It.IsAny<string>()))
-//                .Returns(attemptQuestionDtos);
+            //  assert
+            clientMock.Verify(x => x.GetAnswers(questionId), Times.Once);
+        }
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            var response = controller.FetchPreviousQuestions();
+        [Fact]
+        public void FetchAnswersForQuestion_Always_ReturnsResponseFromIStackExchangeClient() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//            //  assert
-//            response.Should().BeEquivalentTo(attemptQuestionDtos);
-//        }
+            var answerDtos = AutoFixture.CreateMany<AnswerDto>().ToList();
+            AutoFixture.Freeze<Mock<IStackExchangeClient>>()
+                .Setup(x => x.GetAnswers(It.IsAny<int>()))
+                .Returns(answerDtos);
 
-//        [Fact]
-//        public void FetchAnswersForQuestion_Always_CallsIStackExchangeClientFetchAnswersForQuestionOnce() {
-//            // arrange
-//            var questionId = AutoFixture.Create<int>();
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            var response = controller.FetchAnswersForQuestion(questionId);
 
-//            var clientMock = AutoFixture.Freeze<Mock<IStackExchangeClient>>();
+            //  assert
+            response.Should().BeEquivalentTo(answerDtos);
+        }
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            controller.FetchAnswersForQuestion(questionId);
+        [Fact]
+        public void GetAttemptsForQuestion_Always_CallsIAttemptRepositoryGetAttemptsForQuestion() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//            //  assert
-//            clientMock.Verify(x => x.GetAnswers(questionId), Times.Once);
-//        }
+            var repositoryMock = AutoFixture.Freeze<Mock<IAttemptRepository>>();
 
-//        [Fact]
-//        public void FetchAnswersForQuestion_Always_ReturnsResponseFromIStackExchangeClient() {
-//            // arrange
-//            var questionId = AutoFixture.Create<int>();
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.GetAttemptsForQuestion(questionId);
 
-//            var answerDtos = AutoFixture.CreateMany<AnswerDto>().ToList();
-//            AutoFixture.Freeze<Mock<IStackExchangeClient>>()
-//                .Setup(x => x.GetAnswers(It.IsAny<int>()))
-//                .Returns(answerDtos);
+            //  assert
+            repositoryMock.Verify(x => x.GetAttemptsForQuestion(questionId), Times.Once);
+        }
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            var response = controller.FetchAnswersForQuestion(questionId);
+        [Fact]
+        public void GetAttemptsForQuestion_Always_CallsIMapperMapAttemptDtoOnce() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//            //  assert
-//            response.Should().BeEquivalentTo(answerDtos);
-//        }
+            var attempts = AutoFixture.CreateMany<Attempt>().ToList();
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttemptsForQuestion(It.IsAny<int>()))
+                .Returns(attempts);
 
-//        [Fact]
-//        public void GetAttemptsForQuestion_Always_CallsIAttemptRepositoryGetAttemptsForQuestion() {
-//            // arrange
-//            var questionId = AutoFixture.Create<int>();
+            var mapperMock = AutoFixture.Freeze<Mock<IMapper>>();
 
-//            var repositoryMock = AutoFixture.Freeze<Mock<IAttemptRepository>>();
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.GetAttemptsForQuestion(questionId);
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            controller.GetAttemptsForQuestion(questionId);
+            //  assert
+            mapperMock.Verify(x => x.Map<IEnumerable<AttemptDto>>(attempts), Times.Once);
+        }
 
-//            //  assert
-//            repositoryMock.Verify(x => x.GetAttemptsForQuestion(questionId), Times.Once);
-//        }
+        [Fact]
+        public void GetAttemptsForQuestion_Always_ReturnsResponseFromIMapper() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//        [Fact]
-//        public void GetAttemptsForQuestion_Always_CallsIMapperMapAttemptDtoOnce() {
-//            // arrange
-//            var questionId = AutoFixture.Create<int>();
+            var attempts = AutoFixture.CreateMany<Attempt>().ToList();
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttemptsForQuestion(It.IsAny<int>()))
+                .Returns(attempts);
 
-//            var attempts = AutoFixture.CreateMany<Attempt>().ToList();
-//            AutoFixture.Freeze<Mock<IAttemptRepository>>()
-//                .Setup(x => x.GetAttemptsForQuestion(It.IsAny<int>()))
-//                .Returns(attempts);
+            var attemptDtos = AutoFixture.CreateMany<AttemptDto>().ToList();
+            AutoFixture.Freeze<Mock<IMapper>>()
+                .Setup(x => x.Map<IEnumerable<AttemptDto>>(It.IsAny<IEnumerable<Attempt>>()))
+                .Returns(attemptDtos);
 
-//            var mapperMock = AutoFixture.Freeze<Mock<IMapper>>();
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            var response = controller.GetAttemptsForQuestion(questionId);
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            controller.GetAttemptsForQuestion(questionId);
+            //  assert
+            response.Should().BeEquivalentTo(attemptDtos);
+        }
 
-//            //  assert
-//            mapperMock.Verify(x => x.Map<IEnumerable<AttemptDto>>(attempts), Times.Once);
-//        }
+        [Fact]
+        public void FetchAnswersForQuestion_Always_CallsIStackExchangeClientGetAnswersOnce() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//        [Fact]
-//        public void GetAttemptsForQuestion_Always_ReturnsResponseFromIMapper() {
-//            // arrange
-//            var questionId = AutoFixture.Create<int>();
+            var clientMock = AutoFixture.Freeze<Mock<IStackExchangeClient>>();
 
-//            var attempts = AutoFixture.CreateMany<Attempt>().ToList();
-//            AutoFixture.Freeze<Mock<IAttemptRepository>>()
-//                .Setup(x => x.GetAttemptsForQuestion(It.IsAny<int>()))
-//                .Returns(attempts);
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.FetchAnswersForQuestion(questionId);
 
-//            var attemptDtos = AutoFixture.CreateMany<AttemptDto>().ToList();
-//            AutoFixture.Freeze<Mock<IMapper>>()
-//                .Setup(x => x.Map<IEnumerable<AttemptDto>>(It.IsAny<IEnumerable<Attempt>>()))
-//                .Returns(attemptDtos);
+            // assert
+            clientMock.Verify(x => x.GetAnswers(questionId), Times.Once);
+        }
 
-//            // act
-//            var controller = AutoFixture.Create<QuestionController>();
-//            var response = controller.GetAttemptsForQuestion(questionId);
+        [Fact]
+        public void FetchAnswersForQuestions_Always_CallsIAttemptRepositoryGetAttemptsForAnswerOncePerAnswerDto() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
 
-//            //  assert
-//            response.Should().BeEquivalentTo(attemptDtos);
-//        }
-//    }
-//}
+            var answerDtos = AutoFixture.CreateMany<AnswerDto>().ToList();
+            AutoFixture.Freeze<Mock<IStackExchangeClient>>()
+                .Setup(x => x.GetAnswers(It.IsAny<int>()))
+                .Returns(answerDtos);
+
+            var repositoryMock = AutoFixture.Freeze<Mock<IAttemptRepository>>();
+
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.FetchAnswersForQuestion(questionId);
+
+            // assert
+            foreach (var answerDto in answerDtos) {
+                repositoryMock.Verify(x => x.GetAttemptsForAnswer(answerDto.AnswerId), Times.Once);
+            }
+        }
+
+        [Fact]
+        public void FetchAnswersForQuestions_Always_SetsAttemptCountEqualToCountFromIAttemptRepositoryGetAttemptsForAnswer() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
+
+            var answerDtos = AutoFixture.CreateMany<AnswerDto>().ToList();
+            AutoFixture.Freeze<Mock<IStackExchangeClient>>()
+                .Setup(x => x.GetAnswers(It.IsAny<int>()))
+                .Returns(answerDtos);
+
+            var attempts = AutoFixture.CreateMany<Attempt>().ToList();
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttemptsForAnswer(It.IsAny<int>()))
+                .Returns(attempts);
+
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            controller.FetchAnswersForQuestion(questionId);
+
+            // assert
+            foreach (var answerDto in answerDtos) {
+                answerDto.AttemptCount.Should().Be(attempts.Count);
+            }
+        }
+
+        [Fact]
+        public void FetchAnswersForQuestions_Always_ReturnsAnswerDtos() {
+            // arrange
+            var questionId = AutoFixture.Create<int>();
+
+            var answerDtos = AutoFixture.CreateMany<AnswerDto>().ToList();
+            AutoFixture.Freeze<Mock<IStackExchangeClient>>()
+                .Setup(x => x.GetAnswers(It.IsAny<int>()))
+                .Returns(answerDtos);
+
+            // act
+            var controller = AutoFixture.Create<QuestionController>();
+            var response = controller.FetchAnswersForQuestion(questionId);
+
+            // assert
+            response.Should().BeEquivalentTo(answerDtos);
+        }
+    }
+}

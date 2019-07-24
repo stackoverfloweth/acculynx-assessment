@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Api.Contract;
-using Data.Entities;
+﻿using Api.Contract;
+using System.Collections.Generic;
 
 namespace Api.Core {
     public interface IAttemptedQuestionDtoAssembler {

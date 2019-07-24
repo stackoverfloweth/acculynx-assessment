@@ -80,4 +80,11 @@
     background-color: #E1ECF4;
     border-color: #E1ECF4;
   }
+
+  blockquote {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #FFF8DC;
+    border-left: 2px solid #ffeb8e;
+  }
 </style>

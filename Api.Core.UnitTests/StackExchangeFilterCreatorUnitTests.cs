@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Api.Contract;
+﻿using Api.Contract;
 using Api.Contract.Enums;
 using FluentAssertions;
 using Moq;
 using Ploeh.AutoFixture;
 using RestSharp;
+using System.Collections.Generic;
+using System.Linq;
 using UnitTest.Framework;
 using Xunit;
 
@@ -21,7 +21,7 @@ namespace Api.Core.UnitTests {
             filterCreator.CreateFilter();
 
             // assert
-            resourceFactoryMock.Verify(x=>x.FetchResource(StackExchangeResourceEnum.CreateFilter), Times.Once);
+            resourceFactoryMock.Verify(x => x.FetchResource(StackExchangeResourceEnum.CreateFilter), Times.Once);
         }
 
         [Fact]
@@ -42,8 +42,10 @@ namespace Api.Core.UnitTests {
             restSharpWrapperMock.Verify(x => x.CreateRestRequest(path), Times.Once);
         }
 
-        [Fact]
-        public void CreateFilter_Always_CallsIRestRequestAddParameterOnce() {
+        [Theory]
+        [InlineData("include", "question.accepted_answer_id;question.body;answer.body")]
+        [InlineData("key", "cXOea6bOwSD2EuIw7XPIlA((")]
+        public void CreateFilter_Always_CallsIRestRequestAddParameter(string key, object value) {
             // arrange
             var request = new Mock<IRestRequest>();
             AutoFixture.Freeze<Mock<IRestSharpWrapper>>()
@@ -55,7 +57,7 @@ namespace Api.Core.UnitTests {
             filterCreator.CreateFilter();
 
             // assert
-            request.Verify(x=>x.AddParameter("include", "question.accepted_answer_id;question.body;answer.body"), Times.Once);
+            request.Verify(x => x.AddParameter(key, value), Times.Once);
         }
 
         [Fact]
@@ -89,7 +91,7 @@ namespace Api.Core.UnitTests {
             filterCreator.CreateFilter();
 
             // assert
-            client.Verify(x=>x.Execute<ItemResponseDto<FilterDto>>(request.Object), Times.Once);
+            client.Verify(x => x.Execute<ItemResponseDto<FilterDto>>(request.Object), Times.Once);
         }
 
         [Fact]
@@ -164,7 +166,7 @@ namespace Api.Core.UnitTests {
             var client = new Mock<IRestClient>();
             var data = AutoFixture.Build<ItemResponseDto<FilterDto>>()
                 .With(x => x.QuotaRemaining, RandomGenerator.Next(1, 100))
-                .With(x=>x.Items, new List<FilterDto>())
+                .With(x => x.Items, new List<FilterDto>())
                 .Create();
             var restResponse = AutoFixture.Build<RestResponse<ItemResponseDto<FilterDto>>>()
                 .With(x => x.Data, data)

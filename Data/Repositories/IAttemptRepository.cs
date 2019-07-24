@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Data.Entities;
+﻿using Data.Entities;
+using System.Collections.Generic;
 
 namespace Data.Repositories {
     public interface IAttemptRepository {

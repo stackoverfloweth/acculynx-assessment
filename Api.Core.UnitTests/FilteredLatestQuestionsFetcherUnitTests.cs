@@ -18,7 +18,7 @@ namespace Api.Core.UnitTests {
             AutoFixture.Freeze<Mock<IQuestionFilter>>()
                 .Setup(x => x.FilterQuestions(It.IsAny<IEnumerable<QuestionDto>>()))
                 .Returns(filteredQuestions);
-                
+
 
             // act 
             var fetcher = AutoFixture.Create<FilteredLatestQuestionsFetcher>();

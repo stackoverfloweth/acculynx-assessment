@@ -1,11 +1,10 @@
 ﻿using Api.Contract;
 using Api.Controllers;
 using Api.Core;
-using AutoMapper;
-using Data.Entities;
-using Data.Repositories;
+using FluentAssertions;
 using Moq;
 using Ploeh.AutoFixture;
+using System.Linq;
 using UnitTest.Framework;
 using Xunit;
 
@@ -27,18 +26,47 @@ namespace Api.UnitTests {
         }
 
         [Fact]
-        public void FetchAttempt_Always_CallsIAttemptRepositoryGetAttemptOnce() {
+        public void FetchAttempt_Always_CallsIPreviouslyAttemptedQuestionFetcherFetchAttemptedQuestionOnce() {
             // arrange
             var questionId = AutoFixture.Create<int>();
 
-            var attemptRepository = AutoFixture.Freeze<Mock<IAttemptRepository>>();
+            var attemptedQuestionFetcherMock = AutoFixture.Freeze<Mock<IPreviouslyAttemptedQuestionFetcher>>();
 
             // act
             var controller = AutoFixture.Create<AttemptController>();
             controller.FetchAttempt(questionId);
 
             // assert
-            attemptRepository.Verify(x=>x.GetAttempt(questionId, It.IsAny<string>()), Times.Once);
+            attemptedQuestionFetcherMock.Verify(x => x.FetchAttemptedQuestion(It.IsAny<string>(), questionId), Times.Once);
+        }
+
+        [Fact]
+        public void FetchPreviousQuestions_Always_CallsIPreviouslyAttemptedQuestionFetcherFetchQuestionsOnce() {
+            // arrange
+            var questionFetcherMock = AutoFixture.Freeze<Mock<IPreviouslyAttemptedQuestionFetcher>>();
+
+            // act
+            var controller = AutoFixture.Create<AttemptController>();
+            controller.FetchPreviousQuestions();
+
+            //  assert
+            questionFetcherMock.Verify(x => x.FetchAttemptedQuestions(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public void FetchPreviousQuestions_Always_ReturnsResponseFromIPreviouslyAttemptedQuestionFetcher() {
+            // arrange
+            var attemptQuestionDtos = AutoFixture.CreateMany<AttemptedQuestionDto>().ToList();
+            AutoFixture.Freeze<Mock<IPreviouslyAttemptedQuestionFetcher>>()
+                .Setup(x => x.FetchAttemptedQuestions(It.IsAny<string>()))
+                .Returns(attemptQuestionDtos);
+
+            // act
+            var controller = AutoFixture.Create<AttemptController>();
+            var response = controller.FetchPreviousQuestions();
+
+            //  assert
+            response.Should().BeEquivalentTo(attemptQuestionDtos);
         }
     }
 }

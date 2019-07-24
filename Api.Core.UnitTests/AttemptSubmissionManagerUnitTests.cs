@@ -11,10 +11,52 @@ using Xunit;
 namespace Api.Core.UnitTests {
     public class AttemptSubmissionManagerUnitTests : UnitTestBase {
         [Fact]
-        public void SubmitAttempt_Always_CallsIMapperMapAttemptOnce() {
+        public void SubmitAttempt_Always_CallsIAttemptRepositoryGetAttemptOnce() {
             // arrange
             var attemptDto = AutoFixture.Create<AttemptDto>();
             var userId = AutoFixture.Create<string>();
+
+            var repositoryMock = AutoFixture.Freeze<Mock<IAttemptRepository>>();
+
+            // act
+            var manager = AutoFixture.Create<AttemptSubmissionManager>();
+            manager.SubmitAttempt(attemptDto, userId);
+
+            //  assert
+            repositoryMock.Verify(x => x.GetAttempt(attemptDto.QuestionId, userId), Times.Once);
+        }
+
+        [Fact]
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNotNull_ReturnsNull() {
+            // arrange
+            var attemptDto = AutoFixture.Create<AttemptDto>();
+            var userId = AutoFixture.Create<string>();
+
+            var previousAttempt = AutoFixture.Create<Attempt>();
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(previousAttempt);
+
+            var mapperMock = AutoFixture.Freeze<Mock<IMapper>>();
+
+            // act
+            var manager = AutoFixture.Create<AttemptSubmissionManager>();
+            var response = manager.SubmitAttempt(attemptDto, userId);
+
+            //  assert
+            response.Should().BeNull();
+            mapperMock.Verify(x => x.Map<Attempt>(It.IsAny<AttemptDto>()), Times.Never);
+        }
+
+        [Fact]
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNull_CallsIMapperMapAttemptOnce() {
+            // arrange
+            var attemptDto = AutoFixture.Create<AttemptDto>();
+            var userId = AutoFixture.Create<string>();
+
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((Attempt)null);
 
             var mapperMock = AutoFixture.Freeze<Mock<IMapper>>();
 
@@ -27,10 +69,14 @@ namespace Api.Core.UnitTests {
         }
 
         [Fact]
-        public void SubmitAttempt_Always_CallsIAttemptScoreCalculatorCalculateScoreOnce() {
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNull_CallsIAttemptScoreCalculatorCalculateScoreOnce() {
             // arrange
             var attemptDto = AutoFixture.Create<AttemptDto>();
             var userId = AutoFixture.Create<string>();
+
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((Attempt)null);
 
             var attempt = AutoFixture.Create<Attempt>();
             AutoFixture.Freeze<Mock<IMapper>>()
@@ -48,10 +94,14 @@ namespace Api.Core.UnitTests {
         }
 
         [Fact]
-        public void SubmitAttempt_Always_AssignsUserIdAndScore() {
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNull_AssignsUserIdAndScore() {
             // arrange
             var attemptDto = AutoFixture.Create<AttemptDto>();
             var userId = AutoFixture.Create<string>();
+
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((Attempt)null);
 
             var attempt = AutoFixture.Create<Attempt>();
             AutoFixture.Freeze<Mock<IMapper>>()
@@ -74,10 +124,14 @@ namespace Api.Core.UnitTests {
         }
 
         [Fact]
-        public void SubmitAttempt_Always_CallsIAttemptRepositoryInsertAttemptOnce() {
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNull_CallsIAttemptRepositoryInsertAttemptOnce() {
             // arrange
             var attemptDto = AutoFixture.Create<AttemptDto>();
             var userId = AutoFixture.Create<string>();
+
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((Attempt)null);
 
             var attempt = AutoFixture.Create<Attempt>();
             AutoFixture.Freeze<Mock<IMapper>>()
@@ -95,10 +149,14 @@ namespace Api.Core.UnitTests {
         }
 
         [Fact]
-        public void SubmitAttempt_Always_CallsIMapperMapAttemptDtoOnce() {
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNull_CallsIMapperMapAttemptDtoOnce() {
             // arrange
             var attemptDto = AutoFixture.Create<AttemptDto>();
             var userId = AutoFixture.Create<string>();
+
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((Attempt)null);
 
             var attempt = AutoFixture.Create<Attempt>();
             var mapperMock = AutoFixture.Freeze<Mock<IMapper>>();
@@ -115,10 +173,14 @@ namespace Api.Core.UnitTests {
         }
 
         [Fact]
-        public void SubmitAttempt_Always_ReturnsResponseFromMapperMapAttemptDto() {
+        public void SubmitAttempt_WhenExistingAttemptCheckReturnsNull_ReturnsResponseFromMapperMapAttemptDto() {
             // arrange
             var attemptDto = AutoFixture.Create<AttemptDto>();
             var userId = AutoFixture.Create<string>();
+
+            AutoFixture.Freeze<Mock<IAttemptRepository>>()
+                .Setup(x => x.GetAttempt(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((Attempt)null);
 
             var returnedAttemptDto = AutoFixture.Create<AttemptDto>();
             AutoFixture.Freeze<Mock<IMapper>>()

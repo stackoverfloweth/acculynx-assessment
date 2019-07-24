@@ -30,7 +30,7 @@ namespace Data.Repositories {
 
         public IEnumerable<Attempt> GetAttemptsForQuestion(int questionId) {
             return _dbContext.Attempts
-                .Where(attempt=> attempt.QuestionId == questionId)
+                .Where(attempt => attempt.QuestionId == questionId)
                 .ToList();
         }
 

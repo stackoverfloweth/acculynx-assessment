@@ -1,6 +1,5 @@
 ﻿using Api.Contract;
 using Api.Contract.Enums;
-using RestSharp;
 using System.Linq;
 
 namespace Api.Core {

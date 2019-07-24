@@ -17,7 +17,7 @@ namespace Api.Core.UnitTests {
 
             // act 
             var fetcher = AutoFixture.Create<StackExchangeResourceFactory>();
-            var response = fetcher.FetchResource(resourceEnum, new List<object>{"argumentValue"});
+            var response = fetcher.FetchResource(resourceEnum, new List<object> { "argumentValue" });
 
             // assert
             response.Should().Be(expectedResource);

@@ -1,8 +1,8 @@
 ﻿using Api.Contract;
+using AutoMapper;
 using Data.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 
 namespace Api.Core {
     public class PreviouslyAttemptedQuestionFetcher : IPreviouslyAttemptedQuestionFetcher {
@@ -35,7 +35,9 @@ namespace Api.Core {
             var attemptQuestionIds = attempts.Select(attempt => attempt.QuestionId).ToList();
             var questionDtos = _stackExchangeClient.GetQuestions(attemptQuestionIds);
 
-            return _attemptedQuestionDtoAssembler.AssembleAttemptedQuestions(attemptDtos, questionDtos);
+            return _attemptedQuestionDtoAssembler.AssembleAttemptedQuestions(attemptDtos, questionDtos)
+                .OrderBy(attemptedQuestion => attemptedQuestion.AttemptDto.AttemptDate)
+                .ToList();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Api.Contract;
-using Api.Controllers;
 using Api.Core;
 using Api.Core.AutoMapper;
 using Autofac;

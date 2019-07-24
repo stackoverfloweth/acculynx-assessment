@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Api.Contract.Enums;
-using RestSharp;
+﻿using Api.Contract.Enums;
+using System.Collections.Generic;
 
 namespace Api.Core {
     public interface IStackExchangeResourceFactory {

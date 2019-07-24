@@ -1,6 +1,4 @@
-﻿using RestSharp;
-
-namespace Api.Core {
+﻿namespace Api.Core {
     public interface IStackExchangeFilterCreator {
         string CreateFilter();
     }

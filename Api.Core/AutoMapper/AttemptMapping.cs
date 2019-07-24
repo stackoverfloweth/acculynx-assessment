@@ -1,7 +1,7 @@
-﻿using System;
-using Api.Contract;
+﻿using Api.Contract;
 using AutoMapper;
 using Data.Entities;
+using System;
 
 namespace Api.Core.AutoMapper {
     public class AttemptMapping : Profile {

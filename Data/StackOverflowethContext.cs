@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Data.Entities;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using Data.Entities;
 
 namespace Data {
     public class StackOverflowethContext : DbContext, IStackOverflowethContext {

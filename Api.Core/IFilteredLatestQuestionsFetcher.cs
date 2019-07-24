@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Api.Contract;
+﻿using Api.Contract;
+using System.Collections.Generic;
 
 namespace Api.Core {
     public interface IFilteredLatestQuestionsFetcher {

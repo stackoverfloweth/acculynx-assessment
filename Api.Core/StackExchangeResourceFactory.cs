@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace Api.Core {
     public class StackExchangeResourceFactory : IStackExchangeResourceFactory {
-        public string FetchResource(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters)
-        {
-            switch (stackExchangeResourceEnum)
-            {
+        public string FetchResource(StackExchangeResourceEnum stackExchangeResourceEnum, List<object> parameters) {
+            switch (stackExchangeResourceEnum) {
                 case StackExchangeResourceEnum.GetQuestions:
                     return "questions";
                 case StackExchangeResourceEnum.LookupQuestions:

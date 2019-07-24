@@ -57,7 +57,7 @@ namespace Data.UnitTests {
             repository.InsertAttempt(attempt);
 
             // assert
-            dbContextMock.Verify(x=>x.SaveChanges(), Times.Never);
+            dbContextMock.Verify(x => x.SaveChanges(), Times.Never);
         }
 
         [Fact]
@@ -146,6 +146,30 @@ namespace Data.UnitTests {
 
             // assert
             response.Should().Be(matchingAttempt);
+        }
+
+        [Fact]
+        public void GetAttemptsForAnswer_Always_ReturnsAllAttemptsWithSameAnswerId() {
+            // arrange
+            var answerId = AutoFixture.Create<int>();
+
+            var matchingAttempts = AutoFixture.Build<Attempt>()
+                .With(x => x.AnswerId, answerId)
+                .CreateMany()
+                .ToList();
+            var nonMatchingAttempts = AutoFixture.CreateMany<Attempt>().ToList();
+            nonMatchingAttempts.InsertRange(RandomGenerator.Next(nonMatchingAttempts.Count), matchingAttempts);
+
+            AutoFixture.Freeze<Mock<IStackOverflowethContext>>()
+                .SetupGet(x => x.Attempts)
+                .Returns(GetMockDbSet(nonMatchingAttempts).Object);
+
+            // act
+            var repository = AutoFixture.Create<AttemptRepository>();
+            var response = repository.GetAttemptsForAnswer(answerId);
+
+            // assert
+            response.Should().BeEquivalentTo(matchingAttempts);
         }
     }
 }
