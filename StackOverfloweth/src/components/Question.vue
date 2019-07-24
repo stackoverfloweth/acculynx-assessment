@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <div>
-      <div class="col">
+    <div class="row">
+      <div class="col-md-6 question">
         <h3>{{question.title}}</h3>
         <div v-html="question.body"></div>
         <div v-for="tag in question.tags" class="tag m-1">{{tag}}</div>
-        <div class="answers">
-          <div v-if="loading" class="text-center">
-            <img src="../assets/loading.gif" />
-          </div>
-          <div v-if="!loading" class="text-center">
-            <answer-item v-for="item in answers" v-bind:key="item.answer_id" :answer="item" :question="question"></answer-item>
-          </div>
+      </div>
+      <div class="col-md-6 answers">
+        <div v-if="loading" class="text-center">
+          <img src="../assets/loading.gif" />
+        </div>
+        <div v-if="!loading">
+          <answer-item v-for="item in answers" v-bind:key="item.answer_id" :answer="item" :question="question"></answer-item>
         </div>
       </div>
     </div>
@@ -55,9 +55,4 @@
 </script>
 
 <style scope>
-  .answers {
-    border-top: 1px solid #f0f0f0;
-    margin-top: 15px;
-    padding-top: 15px;
-  }
 </style>

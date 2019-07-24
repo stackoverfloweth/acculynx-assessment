@@ -8,7 +8,7 @@
         Hmm... I don't have any record of attempts made from this user
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col question">
           <review-item v-for="(item, index) in attempts" v-bind:key="item.question.question_id" :question="item.question" :attempt="item.attempt"></review-item>
         </div>
       </div>

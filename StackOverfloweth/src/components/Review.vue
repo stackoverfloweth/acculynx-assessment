@@ -1,19 +1,23 @@
 <template>
   <div class="container">
-    <div>
-      <b-alert v-if="attemptedQuestion.attempt.answered_correctly" variant="success" show>Nice Job! You guessed the right answer!</b-alert>
-      <b-alert v-if="!attemptedQuestion.attempt.answered_correctly" variant="danger" show>Oops! That wasn't the right answer</b-alert>
+    <div class="row">
       <div class="col">
+        <b-alert v-if="!loading && attemptedQuestion.attempt.answered_correctly" variant="success" show>Nice Job! You guessed the right answer!</b-alert>
+        <b-alert v-if="!loading && !attemptedQuestion.attempt.answered_correctly" variant="danger" show>Oops! That wasn't the right answer</b-alert>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 question">
         <h3>{{attemptedQuestion.question.title}}</h3>
         <div v-html="attemptedQuestion.question.body"></div>
         <div v-for="tag in attemptedQuestion.question.tags" class="tag m-1">{{tag}}</div>
-        <div class="answers">
-          <div v-if="loading" class="text-center">
-            <img src="../assets/loading.gif" />
-          </div>
-          <div v-if="!loading">
-            <answer-item v-for="answer in answers" v-bind:key="answer.answer_id" :attempt="answer.answer_id == attemptedQuestion.attempt.answer_id ? attemptedQuestion.attempt : {}" :answer="answer" :question="attemptedQuestion.question" :reviewMode="true"></answer-item>
-          </div>
+      </div>
+      <div class="col-md-6 answers">
+        <div v-if="loading" class="text-center">
+          <img src="../assets/loading.gif" />
+        </div>
+        <div v-if="!loading">
+          <answer-item v-for="answer in answers" v-bind:key="answer.answer_id" :attempt="answer.answer_id == attemptedQuestion.attempt.answer_id ? attemptedQuestion.attempt : {}" :answer="answer" :question="attemptedQuestion.question" :reviewMode="true"></answer-item>
         </div>
       </div>
     </div>
@@ -39,6 +43,7 @@
       AnswerItem
     },
     mounted() {
+      window.scrollTo(0, 0);
       this.loadQuestion()
       this.loadAnswers()
     },
@@ -59,5 +64,12 @@
   }
 </script>
 
-<style>
+<style scoped>
+  .card {
+    cursor: default;
+  }
+
+  .card:hover {
+    border-color: rgba(0, 0, 0, 0.125);
+  }
 </style>

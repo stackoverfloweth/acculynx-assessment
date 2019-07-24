@@ -2,7 +2,6 @@
   <div id="app">
     <header class="mb-3">
       <b-navbar toggleable="md" type="light" variant="light">
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-navbar-brand to="/">
           <img src="./assets/logo.png" width="40" height="40" alt="logo">
           stackoverfloweth
@@ -37,10 +36,28 @@
   .card {
     cursor: pointer;
     overflow: auto;
+    margin-bottom: 20px;
   }
 
   .card:hover {
     border-color: darkgrey;
+  }
+
+  .question img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .answer-true .card-header {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+
+  .answer-false .card-header {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
   }
 
   pre {

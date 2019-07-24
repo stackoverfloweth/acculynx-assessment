@@ -8,7 +8,7 @@
         That's not good.. I didn't find any questions
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col question">
           <question-item v-for="(question, index) in questions" v-bind:key="question.question_id" :question="question"></question-item>
         </div>
       </div>

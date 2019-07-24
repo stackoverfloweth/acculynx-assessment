@@ -26,7 +26,12 @@
       attempt: {
         type: Object,
         required: false,
-        default: {}
+        default: () => ({
+          answer_id: null,
+          answered_correctly: null,
+          score: null,
+          attempt_count: null,
+        })
       },
       reviewMode: {
         type: Boolean,
@@ -55,20 +60,4 @@
 </script>
 
 <style scope>
-
-  .card {
-    margin-bottom: 20px;
-  }
-
-  .answer-true .card-header {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-  }
-
-  .answer-false .card-header {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  }
 </style>
