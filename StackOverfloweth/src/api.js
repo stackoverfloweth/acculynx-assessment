@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'http://api.stackoverfloweth.local/',
+  baseURL: 'http://stackoverfloweth.azurewebsites.net/',
   json: true
 });
 

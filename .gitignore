@@ -33,3 +33,12 @@
 /Data.UnitTests/obj/Debug
 /UnitTest.Framework/bin/Debug
 /UnitTest.Framework/obj/Debug
+/Api/obj/Release
+/Api/Properties/PublishProfiles
+/Api.Contract/bin/Release
+/Api.Core/bin/Release
+/Api.Core.UnitTests/obj/Release
+/Api.UnitTests/obj/Release
+/Data/bin/Release
+/Data.UnitTests/obj/Release
+/UnitTest.Framework/obj/Release
